@@ -12,4 +12,8 @@ Python 3
 
 ```
 python rtx2lua.py PATH_TO_RTX XML_FOLDER > PATH_TO_LUA
+
+# examples
+python rtx2lua.py rtx/MIS_0000.RTX xml > temp.lua
+python rtx2lua.py rtx/MIS_0001.RTX xml > temp.lua
 ```
