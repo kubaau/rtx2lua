@@ -1,5 +1,6 @@
 from handle_command import *
 from lxml import etree
+from pathlib import Path
 #import codecs
 import os
 import sys
@@ -28,12 +29,13 @@ with open(sys.argv[1]) as rtx:
         elif instruction.startswith('!'):
             handle_command(instruction.strip('!').replace("GLOBAL_", ""), words[1:])
         elif instruction.startswith('#'):
-            pass#print("comment {}".format(line[1:].strip()))
+            pass #print("comment {}".format(line[1:].strip()))
         else:
-            pass#print("unknown {}".format(words))
+            pass #print("unknown command {}".format(words))
 # RTX interpretation end
 
-print_file("common_header.lua")
+print("-- Generation start (https://github.com/kubaau/rtx2lua)")
+print("\n-- Original map script: {}".format(Path(sys.argv[1]).name))
 
 # RegisterTranslations start
 print("\nrttr:RegisterTranslations(\n{")
@@ -61,11 +63,9 @@ for xml_subfolder in os.listdir(xml_folder):
 print("})\n")
 # RegisterTranslations end
 
-print_file("common_events.lua")
+print_file("boilerplate.lua")
 
 # Settings start
-print()
-print_file("common_settings.lua")
 keylist = [*computer_portraits.keys()]
 keylist.sort()
 for player in keylist:
@@ -79,6 +79,9 @@ for player in keylist:
 print("end")
 # Settings end
 
+print("\nactiveEvents = {}")
+print("endEvents = {}")
+
 # onStart start
 print("\nfunction onStart(isFirstStart)", end = "")
 
@@ -86,7 +89,8 @@ keylist = [*player_commands_always]
 keylist.sort()
 for key in keylist:
     print("\n    -- player {} commands always".format(key))
-    player_commands_always[key].sort()
+    if key == 0:
+        print("    rttr:GetPlayer(0):DisableAllBuildings()")
     for value in player_commands_always[key]:
         print("    rttr:GetPlayer({}):{}".format(key, value))
 
@@ -130,6 +134,10 @@ for key in keylist:
         print("            [{:21}] = {}".format(person, amount), end = ",\n")
     print("        })")
 
+print("\n        -- end events which need to be triggered multiple times")
+for event in end_event_requirements:
+    print("        {}".format(event))
+
 print("\n        -- activate events")
 for event in active_events:
     print("        {}".format(event))
@@ -142,37 +150,50 @@ print("    end\nend\n")
 # isFirstStart end
 # onStart end
 
-# onGameFrame start
-print("function onGameFrame(gf)")
-for event in ongameframe_events:
+# TriggerEndEvent start
+print("\nfunction TriggerEndEvent(e)")
+print("    if(not activeEvents[e]) then return end")
+print("    endEvents[e] = endEvents[e] + 1")
+print("    if(false) then -- dummy if")
+for event in end_events:
     print("    {}".format(event))
+print("    end\nend\n")
+# TriggerEndEvent end
+
+# onGameFrame start
+print("function onGameFrame(gf)", end = "")
+for event in ongameframe_events:
+    print("\n    {}".format(event))
 print("end\n")
 # onGameFrame end
 
 # onExplored start
-print("function onExplored(p, x, y)")
-print("    if(p ~= 0) then return end")
+print("function onExplored(p, x, y, o)")
+print("    -- onContact cases")
+print("    if(false) then -- dummy if")
 for event in oncontact_events:
     print("    {}".format(event))
+print("    end\n")
+print("    if(p ~= 0) then return")
 for event in onexplored_events:
     print("    {}".format(event))
-print("end\n")
+print("    end\nend\n")
 # onExplored end
 
 # onOccupied start
 print("function onOccupied(p, x, y)")
-print("    if(p ~= 0) then return end")
+print("    if(p ~= 0) then return")
 for event in onoccupied_events:
     print("    {}".format(event))
-print("end\n")
+print("    end\nend\n")
 # onOccupied end
 
 # onResourceFound start
-print("function onResourceFound(p, x, y, rIdx, q)")
-print("    if(p ~= 0) then return end")
+print("function onResourceFound(p, x, y, r, q)")
+print("    if(p ~= 0) then return")
 for event in onresourcefound_events:
-    print("    {}".format(event))
-print("end")
+    print(event)
+print("    end\nend")
 # onResourceFound end
 
 print("-- Generation end")
