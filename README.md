@@ -9,9 +9,9 @@ Python 3
 ## Usage
 
 ```
-python rtx2lua.py RTX_FILE [TXT_FOLDER {TXT}] [> OUTPUT_FILE]
+python rtx2lua.py RTX_FILE [CAMPAIGN_NAME {roman}] [TXT_FOLDER {TXT}] [> OUTPUT_FILE]
 
 # examples
 python rtx2lua.py RTX/MIS_0000.RTX
-python rtx2lua.py RTX/MIS_0001.RTX TXT > temp.lua
+python rtx2lua.py RTX/MIS_0001.RTX my_campaign_name my_txt_folder > temp.lua
 ```

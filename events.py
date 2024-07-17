@@ -1,6 +1,7 @@
 import constants
 
 active = []
+campaign = "roman"
 end = []
 oncontact = []
 onexplored = []
@@ -63,8 +64,8 @@ def set_final_event(args):
     event_id = int(args[0])
     chapter = int(args[1])
     ret = "elseif(e == {:>2}) then".format(event_id)
-    ret += "\n        rttr:SetCampaignChapterCompleted('roman', {})".format(chapter)
-    ret += "\n        rttr:EnableCampaignChapter('roman', {})".format(chapter + 1)
+    ret += "\n        rttr:SetCampaignChapterCompleted({}, {})".format(repr(campaign), chapter)
+    ret += "\n        rttr:EnableCampaignChapter({}, {})".format(repr(campaign), chapter + 1)
     return ret
 
 def set_map_element(args):

@@ -7,12 +7,17 @@ import os
 import sys
 
 if len(sys.argv) < 2:
-    print("Usage: python rtx2lua.py RTX_FILE [TXT_FOLDER {TXT}] [> OUTPUT_FILE]")
+    print("Usage: python rtx2lua.py RTX_FILE [CAMPAIGN_NAME {roman}] [TXT_FOLDER {TXT}] [> OUTPUT_FILE]")
     exit(1)
 
-txt_folder = "TXT"
+rtx_file = sys.argv[1]
+
 if len(sys.argv) >= 3:
-    txt_folder = sys.argv[2]
+    events.campaign = sys.argv[2]
+
+txt_folder = "TXT"
+if len(sys.argv) >= 4:
+    txt_folder = sys.argv[3]
 
 def print_file(filename):
     with open(filename) as file:
@@ -20,7 +25,7 @@ def print_file(filename):
             print(line, end = "")
 
 # RTX interpretation begin
-with open(sys.argv[1]) as rtx:
+with open(rtx_file) as rtx:
     for line in rtx.readlines():
         words = line.replace(',', '').split()
         if not words:
