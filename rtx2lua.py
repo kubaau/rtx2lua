@@ -1,13 +1,16 @@
 from handle_command import *
-from lxml import etree
 from pathlib import Path
-import codecs
+from txt2dict import txt2dict
 import os
 import sys
 
-if len(sys.argv) < 3:
-    print("Usage: python rtx2lua.py PATX_TO_RTX XML_FOLDER")
+if len(sys.argv) < 2:
+    print("Usage: python rtx2lua.py RTX_FILE [TXT_FOLDER {TXT}] [> OUTPUT_FILE]")
     exit(1)
+
+txt_folder = "TXT"
+if len(sys.argv) >= 3:
+    txt_folder = sys.argv[2]
 
 def print_file(filename):
     with open(filename) as file:
@@ -39,33 +42,26 @@ print("\n-- Original map script: {}".format(Path(sys.argv[1]).name))
 
 # RegisterTranslations begin
 print("\nrttr:RegisterTranslations(\n{")
-xml_folder = sys.argv[2]
-for xml_subfolder in os.listdir(xml_folder):
-    xml_file = "{}/{}/MISS_0{:02}.XML".format(xml_folder, xml_subfolder, mission_texts[0])
+sys.stdout.reconfigure(encoding="utf-8")
+for txt_subfolder in os.listdir(txt_folder):
+    diary = "Diary"
+    encoding = "cp852"
+    extension = "ENG"
+    match txt_subfolder:
+        case "de":
+            diary = "Tagebuch"
+            extension = "GER"
+        case "pl":
+            diary = "Dziennik"
+            encoding = "cp1250"
 
-    # awful
-    if xml_subfolder == "de":
-        xml_file_encoded = "{}{}".format(xml_file, "enc")
-        with codecs.open(xml_file, "r", "cp1250") as src:
-            with codecs.open(xml_file_encoded, "w", "utf-8") as dest:
-                src.readline()
-                dest.write('<?xml version="1.0" encoding="cp1250" standalone="yes" ?>\n')
-                dest.write(src.read())
-        xml_file = xml_file_encoded
-    elif xml_subfolder == "pl":
-        continue
+    txt_file = Path("{}/{}/MISS_{:03}.{}".format(txt_folder, txt_subfolder, mission_texts[0], extension))
+    texts = txt2dict(txt_file, encoding)
 
-    xml_tree = etree.parse(xml_file)
-    texts = xml_tree.xpath('//text/text()')
-    print("    {} = \n    {{".format(xml_subfolder))
-    print("        Diary\t= 'Diary',")
-    for i in range(0, len(texts), 2):
-        print()
-        extractedid = xml_tree.xpath('//text/@extractedid')[i]
-        print("        msg{}\t= {},".format(extractedid, repr(texts[i].strip())))
-        goal = texts[i + 1].strip()
-        if goal:
-            print("        msgh{}\t= {},".format(extractedid, repr(goal)))
+    print("    {} =\n    {{".format(txt_subfolder))
+    print("        Diary\t= '{}',".format(diary))
+    for key, value in texts.items():
+        print("        {:7} = {}".format(key, value), end = ",\n")
     print("    },")
 print("})\n")
 # RegisterTranslations end
