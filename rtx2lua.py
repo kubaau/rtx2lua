@@ -19,11 +19,6 @@ txt_folder = "TXT"
 if len(sys.argv) >= 4:
     txt_folder = sys.argv[3]
 
-def print_file(filename):
-    with open(filename) as file:
-        for line in file.readlines():
-            print(line, end = "")
-
 # RTX interpretation begin
 with open(rtx_file) as rtx:
     for line in rtx.readlines():
@@ -37,7 +32,7 @@ with open(rtx_file) as rtx:
             if section == "ENDE":
                 break
         elif instruction.startswith('!'):
-            commands.handle(instruction.strip('!').replace("GLOBAL_", ""), words[1:])
+            commands.handle(instruction.strip('!').replace("GLOBAL_", ""), [int(i) for i in words[1:]])
         elif instruction.startswith('#'):
             pass #print("comment {}".format(line[1:].strip()))
         else:
@@ -73,23 +68,24 @@ for txt_subfolder in os.listdir(txt_folder):
 print("})\n")
 # RegisterTranslations end
 
-print_file("boilerplate.lua")
+with open("boilerplate.lua") as file:
+    print(file.read())
 
 # Settings begin
 keylist = [*commands.portraits.keys()]
 keylist.sort()
 for player in keylist:
-    portrait = int(commands.portraits[player])
+    portrait = commands.portraits[player]
     print()
     print("    rttr:GetPlayer({}):SetAI(3)".format(player))
     print("    rttr:GetPlayer({}):SetColor({})".format(player, player))
     print("    rttr:GetPlayer({}):SetNation({})".format(player, constants.nations[int(portrait / 3)]))
     print("    rttr:GetPlayer({}):SetName({})".format(player, repr(constants.portraits[portrait])))
     print(" -- rttr:GetPlayer({}):SetPortrait({})".format(player, portrait))
-print("end")
+print("end\n")
 # Settings end
 
-print("\nactiveEvents = {}")
+print("activeEvents = {}")
 print("endEvents = {}")
 
 # onStart begin
@@ -161,7 +157,7 @@ print("    end\nend\n")
 # onStart end
 
 # TriggerEndEvent begin
-print("\nfunction TriggerEndEvent(e)")
+print("function TriggerEndEvent(e)")
 print("    if(not activeEvents[e]) then return end")
 print("    endEvents[e] = endEvents[e] + 1")
 print("    if(false) then -- dummy if")

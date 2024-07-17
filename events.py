@@ -12,9 +12,9 @@ onstart = []
 requirements = []
 
 def found(res, args):
-    event_id = int(args[0])
-    end_event_id = int(args[1])
-    text_id = int(args[2])
+    event_id = args[0]
+    end_event_id = args[1]
+    text_id = args[2]
 
     ret = "    elseif(activeEvents[{:>2}] and r == RES_{}) then".format(event_id, res)
     ret += "\n        TriggerEndEvent({})".format(event_id)
@@ -29,11 +29,11 @@ def house_enabling(e, bld):
     return "elseif(e == {:>2}) then\n        rttr:GetPlayer(0):EnableBuilding({}, true)".format(e, bld)
 
 def position_explored_or_occupied(args):
-    event_id = int(args[0])
-    end_event_id = int(args[1])
-    x = int(args[2])
-    y = int(args[3])
-    text_id = int(args[4])
+    event_id = args[0]
+    end_event_id = args[1]
+    x = args[2]
+    y = args[3]
+    text_id = args[4]
 
     ret = "elseif(activeEvents[{}] and x == {} and y == {}) then".format(event_id, x, y)
     ret += "\n        TriggerEndEvent({})".format(event_id)
@@ -45,10 +45,10 @@ def position_explored_or_occupied(args):
     return ret
 
 def end_event(args):
-    event_id = int(args[0])
-    times_required = int(args[2])
-    enable_event = int(args[3])
-    text_id = int(args[7])
+    event_id = args[0]
+    times_required = args[2]
+    enable_event = args[3]
+    text_id = args[7]
 
     ret = "elseif(e == {:>2}".format(event_id)
     if times_required > 1:
@@ -61,27 +61,27 @@ def end_event(args):
     return ret
 
 def set_final_event(args):
-    event_id = int(args[0])
-    chapter = int(args[1])
+    event_id = args[0]
+    chapter = args[1]
     ret = "elseif(e == {:>2}) then".format(event_id)
     ret += "\n        rttr:SetCampaignChapterCompleted({}, {})".format(repr(campaign), chapter)
     ret += "\n        rttr:EnableCampaignChapter({}, {})".format(repr(campaign), chapter + 1)
     return ret
 
 def set_map_element(args):
-    event_id = int(args[0])
-    x = int(args[1])
-    y = int(args[2])
+    event_id = args[0]
+    x = args[1]
+    y = args[2]
     ret = "elseif(e == {:>2}) then".format(event_id)
     ret += "\n        rttr:GetWorld():AddStaticObject({}, {}, 561, 0xFFFF, 2)".format(x, y)
     return ret
 
 def house_amount(args):
-    event_id = int(args[0])
-    end_event_id = int(args[1])
-    building = constants.buildings[int(args[2])]
-    amount = int(args[3])
-    text_id = int(args[4])
+    event_id = args[0]
+    end_event_id = args[1]
+    building = constants.buildings[args[2]]
+    amount = args[3]
+    text_id = args[4]
 
     ret = "if(activeEvents[{}] and rttr:GetPlayer(0):GetBuildingCount({}) >= {}) then".format(event_id, building, amount)
     ret += "\n        TriggerEndEvent({})".format(event_id)
@@ -94,11 +94,11 @@ def house_amount(args):
     return ret
 
 def ware_amount(args):
-    event_id = int(args[0])
-    end_event_id = int(args[1])
-    ware = constants.wares[int(args[2])]
-    amount = int(args[3])
-    text_id = int(args[4])
+    event_id = args[0]
+    end_event_id = args[1]
+    ware = constants.wares[args[2]]
+    amount = args[3]
+    text_id = args[4]
 
     ret = "if(activeEvents[{}] and rttr:GetPlayer(0):GetWareCount({}) >= {}) then".format(event_id, ware, amount)
     ret += "\n        TriggerEndEvent({})".format(event_id)
@@ -111,10 +111,10 @@ def ware_amount(args):
     return ret
 
 def contact_to_player(args):
-    event_id = int(args[0])
-    end_event_id = int(args[1])
-    other_player = int(args[2])
-    text_id = int(args[3])
+    event_id = args[0]
+    end_event_id = args[1]
+    other_player = args[2]
+    text_id = args[3]
     ret = "elseif(activeEvents[{0}] and (p == 0 and o == {1}) or (p == {1} and o == 0)) then".format(event_id, other_player)
     ret += "\n        TriggerEndEvent({})".format(event_id)
     if end_event_id != 255:
@@ -124,10 +124,10 @@ def contact_to_player(args):
     return ret
 
 def land_size(args):
-    event_id = int(args[0])
-    end_event_id = int(args[1])
-    size = int(args[2])
-    text_id = int(args[3])
+    event_id = args[0]
+    end_event_id = args[1]
+    size = args[2]
+    text_id = args[3]
 
     ret = "if(activeEvents[{}] and rttr:GetPlayer(0).GetStatisticsValue ~= nil and rttr:GetPlayer(0):GetStatisticsValue(STAT_COUNTRY) >= {}) then".format(event_id, size)
     ret += "\n        TriggerEndEvent({})".format(event_id)
@@ -150,7 +150,7 @@ def handle(event, args):
         case "DIRECT_EVENT":
             onstart += ["MissionText({})".format(args[2])]
         case "END_EVENT":
-            if int(args[2]) > 1:
+            if args[2] > 1:
                 requirements += ["endEvents[{:>2}] = 0".format(args[0])]
             end += [end_event(args)]
         case event if event.startswith("FOUND_"):
@@ -158,7 +158,7 @@ def handle(event, args):
         case "HOUSE_AMOUNT":
             ongameframe += [house_amount(args)]
         case "HOUSE_ENABLING":
-            end += [house_enabling(args[0], constants.buildings[int(args[1])])]
+            end += [house_enabling(args[0], constants.buildings[args[1]])]
         case "LAND_SIZE":
             ongameframe += [land_size(args)]
         case "POSITION_EXPLORED":
