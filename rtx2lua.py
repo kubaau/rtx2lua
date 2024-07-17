@@ -20,7 +20,7 @@ if len(sys.argv) >= 4:
     txt_folder = sys.argv[3]
 
 # RTX interpretation begin
-with open(rtx_file) as rtx:
+with open(rtx_file, encoding="cp852") as rtx:
     for line in rtx.readlines():
         words = line.replace(',', '').split()
         if not words:
