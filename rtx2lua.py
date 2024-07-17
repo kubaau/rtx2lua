@@ -1,7 +1,7 @@
 from handle_command import *
 from lxml import etree
 from pathlib import Path
-#import codecs
+import codecs
 import os
 import sys
 
@@ -14,7 +14,7 @@ def print_file(filename):
         for line in file.readlines():
             print(line, end = "")
 
-# RTX interpretation start
+# RTX interpretation begin
 with open(sys.argv[1]) as rtx:
     for line in rtx.readlines():
         words = line.replace(',', '').split()
@@ -34,19 +34,26 @@ with open(sys.argv[1]) as rtx:
             pass #print("unknown command {}".format(words))
 # RTX interpretation end
 
-print("-- Generation start (https://github.com/kubaau/rtx2lua)")
+print("-- Generation begin (https://github.com/kubaau/rtx2lua)")
 print("\n-- Original map script: {}".format(Path(sys.argv[1]).name))
 
-# RegisterTranslations start
+# RegisterTranslations begin
 print("\nrttr:RegisterTranslations(\n{")
 xml_folder = sys.argv[2]
 for xml_subfolder in os.listdir(xml_folder):
     xml_file = "{}/{}/MISS_0{:02}.XML".format(xml_folder, xml_subfolder, mission_texts[0])
-    #xml_file_utf8 = "{}{}".format(xml_file, "u")
 
-    #with codecs.open(xml_file, "r", "cp1250") as src:
-        #with codecs.open(xml_file_utf8, "w", "utf-8") as dest:
-            #dest.write(src.read())
+    # awful
+    if xml_subfolder == "de":
+        xml_file_encoded = "{}{}".format(xml_file, "enc")
+        with codecs.open(xml_file, "r", "cp1250") as src:
+            with codecs.open(xml_file_encoded, "w", "utf-8") as dest:
+                src.readline()
+                dest.write('<?xml version="1.0" encoding="cp1250" standalone="yes" ?>\n')
+                dest.write(src.read())
+        xml_file = xml_file_encoded
+    elif xml_subfolder == "pl":
+        continue
 
     xml_tree = etree.parse(xml_file)
     texts = xml_tree.xpath('//text/text()')
@@ -65,7 +72,7 @@ print("})\n")
 
 print_file("boilerplate.lua")
 
-# Settings start
+# Settings begin
 keylist = [*computer_portraits.keys()]
 keylist.sort()
 for player in keylist:
@@ -82,7 +89,7 @@ print("end")
 print("\nactiveEvents = {}")
 print("endEvents = {}")
 
-# onStart start
+# onStart begin
 print("\nfunction onStart(isFirstStart)", end = "")
 
 keylist = [*player_commands_always]
@@ -94,7 +101,7 @@ for key in keylist:
     for value in player_commands_always[key]:
         print("    rttr:GetPlayer({}):{}".format(key, value))
 
-# isFirstStart start
+# isFirstStart begin
 print("\n    if isFirstStart then")
 
 print("        -- world commands")
@@ -150,7 +157,7 @@ print("    end\nend\n")
 # isFirstStart end
 # onStart end
 
-# TriggerEndEvent start
+# TriggerEndEvent begin
 print("\nfunction TriggerEndEvent(e)")
 print("    if(not activeEvents[e]) then return end")
 print("    endEvents[e] = endEvents[e] + 1")
@@ -160,14 +167,14 @@ for event in end_events:
 print("    end\nend\n")
 # TriggerEndEvent end
 
-# onGameFrame start
+# onGameFrame begin
 print("function onGameFrame(gf)", end = "")
 for event in ongameframe_events:
     print("\n    {}".format(event))
 print("end\n")
 # onGameFrame end
 
-# onExplored start
+# onExplored begin
 print("function onExplored(p, x, y, o)")
 print("    -- onContact cases")
 print("    if(false) then -- dummy if")
@@ -180,7 +187,7 @@ for event in onexplored_events:
 print("    end\nend\n")
 # onExplored end
 
-# onOccupied start
+# onOccupied begin
 print("function onOccupied(p, x, y)")
 print("    if(p ~= 0) then return")
 for event in onoccupied_events:
@@ -188,7 +195,7 @@ for event in onoccupied_events:
 print("    end\nend\n")
 # onOccupied end
 
-# onResourceFound start
+# onResourceFound begin
 print("function onResourceFound(p, x, y, r, q)")
 print("    if(p ~= 0) then return")
 for event in onresourcefound_events:
