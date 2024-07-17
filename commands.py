@@ -115,8 +115,8 @@ def handle(command, args):
             enable_house(args)
         case "LOAD_MISSION_TEXTS":
             load_mission_texts(args)
-        case command if command.startswith("MET_"):
-            events.handle(command.replace("MET_", ""), args)
+        case cmd if command.startswith("MET_"):
+            events.handle(cmd.replace("MET_", ""), args)
         case "SET_ACT_PLAYER":
             set_act_player(args)
         case "SET_BOBS":
