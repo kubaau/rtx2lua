@@ -1,6 +1,8 @@
-from handle_command import *
 from pathlib import Path
 from txt2dict import txt2dict
+import commands
+import constants
+import events
 import os
 import sys
 
@@ -30,7 +32,7 @@ with open(sys.argv[1]) as rtx:
             if section == "ENDE":
                 break
         elif instruction.startswith('!'):
-            handle_command(instruction.strip('!').replace("GLOBAL_", ""), words[1:])
+            commands.handle(instruction.strip('!').replace("GLOBAL_", ""), words[1:])
         elif instruction.startswith('#'):
             pass #print("comment {}".format(line[1:].strip()))
         else:
@@ -55,7 +57,7 @@ for txt_subfolder in os.listdir(txt_folder):
             diary = "Dziennik"
             encoding = "cp1250"
 
-    txt_file = Path("{}/{}/MISS_{:03}.{}".format(txt_folder, txt_subfolder, mission_texts[0], extension))
+    txt_file = Path("{}/{}/MISS_{:03}.{}".format(txt_folder, txt_subfolder, commands.chapter, extension))
     texts = txt2dict(txt_file, encoding)
 
     print("    {} =\n    {{".format(txt_subfolder))
@@ -69,15 +71,15 @@ print("})\n")
 print_file("boilerplate.lua")
 
 # Settings begin
-keylist = [*computer_portraits.keys()]
+keylist = [*commands.portraits.keys()]
 keylist.sort()
 for player in keylist:
+    portrait = int(commands.portraits[player])
     print()
     print("    rttr:GetPlayer({}):SetAI(3)".format(player))
     print("    rttr:GetPlayer({}):SetColor({})".format(player, player))
-    portrait = int(computer_portraits[player])
-    print("    rttr:GetPlayer({}):SetNation({})".format(player, nations[int(portrait / 3)]))
-    print("    rttr:GetPlayer({}):SetName({})".format(player, repr(portraits[portrait])))
+    print("    rttr:GetPlayer({}):SetNation({})".format(player, constants.nations[int(portrait / 3)]))
+    print("    rttr:GetPlayer({}):SetName({})".format(player, repr(constants.portraits[portrait])))
     print(" -- rttr:GetPlayer({}):SetPortrait({})".format(player, portrait))
 print("end")
 # Settings end
@@ -88,65 +90,65 @@ print("endEvents = {}")
 # onStart begin
 print("\nfunction onStart(isFirstStart)", end = "")
 
-keylist = [*player_commands_always]
+keylist = [*commands.player_always]
 keylist.sort()
 for key in keylist:
     print("\n    -- player {} commands always".format(key))
     if key == 0:
         print("    rttr:GetPlayer(0):DisableAllBuildings()")
-    for value in player_commands_always[key]:
+    for value in commands.player_always[key]:
         print("    rttr:GetPlayer({}):{}".format(key, value))
 
 # isFirstStart begin
 print("\n    if isFirstStart then")
 
 print("        -- world commands")
-for command in world_commands:
+for command in commands.world:
     print("        rttr:GetWorld():{}".format(command))
 
-keylist = [*player_commands_firststart]
+keylist = [*commands.player_firststart]
 keylist.sort()
 for key in keylist:
     print("\n        -- player {} commands firststart".format(key))
-    for value in player_commands_firststart[key]:
+    for value in commands.player_firststart[key]:
         print("        rttr:GetPlayer({}):{}".format(key, value))
 
-keylist = [*player_wares]
+keylist = [*commands.wares]
 keylist.sort()
 for player in keylist:
     print("\n        -- player {} wares".format(player))
     print("        rttr:GetPlayer({}):AddWares({{".format(player))
-    for ware in wares:
+    for ware in constants.wares:
         amount = 0
-        for player_ware in player_wares[player]:
+        for player_ware in commands.wares[player]:
             if ware in player_ware.keys():
                 amount = player_ware[ware]
         print("            [{:13}] = {}".format(ware, amount), end = ",\n")
     print("        })")
 
-keylist = [*player_people]
+keylist = [*commands.people]
 keylist.sort()
 for key in keylist:
     print("\n        -- player {} people".format(key))
     print("        rttr:GetPlayer({}):AddPeople({{".format(key))
-    for person in people:
+    for person in constants.people:
         amount = 0
-        for player_person in player_people[player]:
+        for player_person in commands.people[player]:
             if person in player_person.keys():
                 amount = player_person[person]
         print("            [{:21}] = {}".format(person, amount), end = ",\n")
     print("        })")
 
 print("\n        -- end events which need to be triggered multiple times")
-for event in end_event_requirements:
+for event in events.requirements:
     print("        {}".format(event))
 
 print("\n        -- activate events")
-for event in active_events:
+for event in events.active:
     print("        {}".format(event))
 
 print("\n        -- onstart events")
-for event in onstart_events:
+for event in events.onstart:
     print("        {}".format(event))
 
 print("    end\nend\n")
@@ -158,14 +160,14 @@ print("\nfunction TriggerEndEvent(e)")
 print("    if(not activeEvents[e]) then return end")
 print("    endEvents[e] = endEvents[e] + 1")
 print("    if(false) then -- dummy if")
-for event in end_events:
+for event in events.end:
     print("    {}".format(event))
 print("    end\nend\n")
 # TriggerEndEvent end
 
 # onGameFrame begin
 print("function onGameFrame(gf)", end = "")
-for event in ongameframe_events:
+for event in events.ongameframe:
     print("\n    {}".format(event))
 print("end\n")
 # onGameFrame end
@@ -174,11 +176,11 @@ print("end\n")
 print("function onExplored(p, x, y, o)")
 print("    -- onContact cases")
 print("    if(false) then -- dummy if")
-for event in oncontact_events:
+for event in events.oncontact:
     print("    {}".format(event))
 print("    end\n")
 print("    if(p ~= 0) then return")
-for event in onexplored_events:
+for event in events.onexplored:
     print("    {}".format(event))
 print("    end\nend\n")
 # onExplored end
@@ -186,7 +188,7 @@ print("    end\nend\n")
 # onOccupied begin
 print("function onOccupied(p, x, y)")
 print("    if(p ~= 0) then return")
-for event in onoccupied_events:
+for event in events.onoccupied:
     print("    {}".format(event))
 print("    end\nend\n")
 # onOccupied end
@@ -194,7 +196,7 @@ print("    end\nend\n")
 # onResourceFound begin
 print("function onResourceFound(p, x, y, r, q)")
 print("    if(p ~= 0) then return")
-for event in onresourcefound_events:
+for event in events.onresourcefound:
     print(event)
 print("    end\nend")
 # onResourceFound end
