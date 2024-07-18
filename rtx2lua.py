@@ -169,8 +169,8 @@ print("    end\nend\n")
 # onGameFrame begin
 print("function onGameFrame(gf)", end = "")
 for event in events.ongameframe:
-    print("\n    {}".format(event))
-print("end\n")
+    print("\n    {}".format(event), end = "")
+print("\nend\n")
 # onGameFrame end
 
 # onExplored begin
