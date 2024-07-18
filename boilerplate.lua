@@ -43,7 +43,7 @@ end
 
 function onSettingsReady()
     checkVersion()
-    rttr:Log("-----------------------\n " + debug.getinfo(1,'S'):match("[^/]*.lua$") + " loaded... \n-----------------------\n")
+    rttr:Log("-----------------------\n lua loaded... \n-----------------------\n")
     rttr:ResetAddons()
     rttr:SetAddon(ADDON_FRONTIER_DISTANCE_REACHABLE, true)
     rttr:SetGameSettings({
