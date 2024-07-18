@@ -141,8 +141,13 @@ def set_final_event(args):
     global end
     eid = args[0]
     chapter = args[1]
+    if chapter == 255:
+        chapter = 10
     code = "        rttr:SetCampaignChapterCompleted({}, {})".format(repr(campaign), chapter)
-    code += "\n        rttr:EnableCampaignChapter({}, {})".format(repr(campaign), chapter + 1)
+    if chapter == 10:
+        code += "\n        rttr:SetCampaignCompleted({})".format(repr(campaign))
+    else:
+        code += "\n        rttr:EnableCampaignChapter({}, {})".format(repr(campaign), chapter + 1)
     end[eid] += [code]
 
 def set_map_element(args):
