@@ -77,7 +77,7 @@ def set_computer_barrier(args): # todo
     x = args[1]
     y = args[2]
 
-    world += ["{}(radius={}, x={}, y={}) -- TODO".format("SET_COMPUTER_BARRIER", radius, x, y)]
+    # world += ["{}(radius={}, x={}, y={})".format("SET_COMPUTER_BARRIER", radius, x, y)]
 
 def set_house(args):
     building = constants.buildings[args[0]]
