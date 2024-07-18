@@ -7,7 +7,7 @@ import os
 import sys
 
 if len(sys.argv) < 2:
-    print("Usage: python rtx2lua.py RTX_FILE [CAMPAIGN_NAME {roman}] [TXT_FOLDER {TXT}] [> OUTPUT_FILE]")
+    print("Usage: python rtx2lua.py RTX_FILE [CAMPAIGN_NAME {roman}] [TXT_FOLDER {TXT_roman}] [> OUTPUT_FILE]")
     exit(1)
 
 if len(sys.argv) >= 3:
