@@ -72,6 +72,7 @@ with open("boilerplate.lua") as file:
     print(file.read())
 
 # Settings begin
+print(" -- TODO: Close() players in Mission 1")
 keylist = [*commands.portraits.keys()]
 keylist.sort()
 for player in keylist:

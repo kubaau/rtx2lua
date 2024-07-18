@@ -105,7 +105,7 @@ def house_enabling(args):
             buildings_to_enable += [args[i]]
     code = "elseif(e == {:>2}) then".format(eid)
     for b in buildings_to_enable:
-        code += "\n        rttr:GetPlayer(0):EnableBuilding({}, true)".format(constants.buildings[b])
+        code += "\n        rttr:GetPlayer(0):EnableBuilding({}, true) -- TODO: wrong logic when following end event".format(constants.buildings[b])
     end += [code]
 
 def land_size(args):
