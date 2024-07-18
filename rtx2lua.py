@@ -79,7 +79,6 @@ def print_ai_settings():
         print("    rttr:GetPlayer({}):SetNation({})".format(ai, constants.nations[int(portrait / 3)]))
         print("    rttr:GetPlayer({}):SetName({})".format(ai, repr(constants.portraits[portrait])))
         print(" -- rttr:GetPlayer({}):SetPortrait({})".format(ai, portrait))
-    print("\n -- TODO: Close() players in Mission 1")
     print("end")
 
 def print_globals():
