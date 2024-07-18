@@ -129,9 +129,9 @@ for player in keylist:
 
 keylist = [*commands.people]
 keylist.sort()
-for key in keylist:
-    print("\n        -- player {} people".format(key))
-    print("        rttr:GetPlayer({}):AddPeople({{".format(key))
+for player in keylist:
+    print("\n        -- player {} people".format(player))
+    print("        rttr:GetPlayer({}):AddPeople({{".format(player))
     for person in constants.people:
         amount = 0
         for player_person in commands.people[player]:
