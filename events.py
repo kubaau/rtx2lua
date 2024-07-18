@@ -11,16 +11,19 @@ onresourcefound = []
 onstart = []
 requirements = []
 
-def add_as_act_event(args):
-    global active
-    eid = args[0]
-    active += ["activeEvents[{:>2}] = true".format(eid)]
-
 def is_event_valid(id):
     return id != 255
 
 def is_msgid_valid(id):
     return id >= 0
+
+def is_house_valid(id):
+    return id <= 32
+
+def add_as_act_event(args):
+    global active
+    eid = args[0]
+    active += ["activeEvents[{:>2}] = true".format(eid)]
 
 def contact_to_player(args):
     global oncontact
@@ -45,7 +48,7 @@ def end_event(args):
     global end, requirements
     eid = args[0]
     times_required = args[2]
-    event_to_enable = args[3]
+    events_to_activate = args[3:7]
     msgid = args[7]
 
     code = "elseif(e == {:>2}".format(eid)
@@ -53,8 +56,9 @@ def end_event(args):
         code += " and endEvents[{}] >= {}".format(eid, times_required)
         requirements += ["endEvents[{:>2}] = 0".format(eid)]
     code += ") then"
-    if is_event_valid(event_to_enable):
-        code += "\n        activeEvents[{}] = true".format(event_to_enable)
+    for e in events_to_activate:
+        if is_event_valid(e):
+            code += "\n        activeEvents[{}] = true".format(e)
     if is_msgid_valid(msgid):
         code += "\n        MissionText({})".format(msgid)
     end += [code]
@@ -95,8 +99,14 @@ def house_amount(args):
 def house_enabling(args):
     global end
     eid = args[0]
-    building = constants.buildings[args[1]]
-    end += ["elseif(e == {:>2}) then\n        rttr:GetPlayer(0):EnableBuilding({}, true)".format(eid, building)]
+    buildings_to_enable = []
+    for i in range(1, 7):
+        if is_house_valid(args[i]):
+            buildings_to_enable += [args[i]]
+    code = "elseif(e == {:>2}) then".format(eid)
+    for b in buildings_to_enable:
+        code += "\n        rttr:GetPlayer(0):EnableBuilding({}, true)".format(constants.buildings[b])
+    end += [code]
 
 def land_size(args):
     global ongameframe
@@ -147,13 +157,16 @@ def set_final_event(args):
     end += [code]
 
 def set_map_element(args):
-    global end
+    global ongameframe
     eid = args[0]
     x = args[1]
     y = args[2]
-    code = "elseif(e == {:>2}) then".format(eid)
+
+    code = "if(activeEvents[{}]) then".format(eid)
     code += "\n        rttr:GetWorld():AddStaticObject({}, {}, 561, 0xFFFF, 2)".format(x, y)
-    end += [code]
+    code += "\n        activeEvents[{}] = false".format(eid)
+    code += "\n    end"
+    ongameframe += [code]
 
 def ware_amount(args):
     global ongameframe
