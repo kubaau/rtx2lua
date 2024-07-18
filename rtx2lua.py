@@ -139,8 +139,8 @@ def print_people():
 
 def print_times_required():
     print("\n        -- events which need to be triggered multiple times")
-    for eid, times_required in events.times_required.items():
-        print("        endEvents[{:>2}] = {}".format(eid, times_required))
+    for eid in events.times_required.keys():
+        print("        endEvents[{:>2}] = 0".format(eid))
 
 def print_active():
     print("\n        -- events which are active right from the start")
