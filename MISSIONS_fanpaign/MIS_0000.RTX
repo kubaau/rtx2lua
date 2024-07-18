@@ -1,3 +1,4 @@
+#FANpaign Mission 1: Gestrandet, von Achim Ruziczka
 [GLOBAL_MAP_SETTINGS]
 !GLOBAL_SET_MAP    200
 !GLOBAL_SET_BOBS	 0
@@ -379,11 +380,11 @@
 !MET_POSITION_EXPLORED     6     255   244  105              12    50           1
 !MET_HOUSE_ENABLING        6	 31	 255 255 255 255 255
 
-
 !MET_POSITION_OCCUPIED     30    99     234  68               -1    -1         1
 !MET_END_EVENT         99   255    1    98 255 255 255    14     -1
 !MET_SET_FINAL_EVENT   99     1  255  255
 !MET_SET_MAP_ELEMENT   98  234  68  23
+!MET_SET_MAP_ELEMENT   50  234  68  22
 
 !MET_ADD_AS_ACT_EVENT       0
 !MET_ADD_AS_ACT_EVENT       1
@@ -394,8 +395,7 @@
 !MET_ADD_AS_ACT_EVENT       6
 !MET_ADD_AS_ACT_EVENT       23
 !MET_ADD_AS_ACT_EVENT       30
-
-!MET_ADD_AS_ACT_EVENT       98
+!MET_ADD_AS_ACT_EVENT       50
 !MET_ADD_AS_ACT_EVENT       99
 
 

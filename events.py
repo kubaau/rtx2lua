@@ -150,17 +150,25 @@ def set_final_event(args):
         code += "\n        rttr:EnableCampaignChapter({}, {})".format(repr(campaign), chapter + 1)
     end[eid] += [code]
 
-def set_map_element(args): # todo fix this logic - game is immediately activated in fanpaign
+def set_map_element(args):
     global end, ongameframe
     eid = args[0]
     x = args[1]
     y = args[2]
+    element_id = args[3]
+
+    if element_id == 22: # gate
+        element_id = 560
+    elif element_id == 23: # activated gate
+        element_id = 561
+    else: # no idea
+        return
 
     code = "if(activeEvents[{}]) then".format(eid)
     code += "\n        TriggerEndEvent({0}, {0})".format(eid)
     code += "\n    end"
     ongameframe[eid] += [code]
-    end[eid] += ["        rttr:GetWorld():AddStaticObject({}, {}, 561, 0xFFFF, 2)".format(x, y)]
+    end[eid] += ["        rttr:GetWorld():AddStaticObject({}, {}, {}, 0xFFFF, 2)".format(x, y, element_id)]
 
 def ware_amount(args):
     global ongameframe

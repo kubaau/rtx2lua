@@ -1,3 +1,4 @@
+#FANpaign Mission 5: Ozeanien, von Heiko Bieger
 [GLOBAL_MAP_SETTINGS]
 !GLOBAL_SET_MAP    204
 !GLOBAL_SET_BOBS	 1
@@ -366,6 +367,7 @@
 
 !MET_POSITION_OCCUPIED     3     99       181  61             -1    -1         1
 !MET_SET_MAP_ELEMENT   98  181  61 23
+!MET_SET_MAP_ELEMENT   50  181  61 22
 
 !MET_END_EVENT         99   255    1    98 255 255 255     6    -1
 
@@ -378,7 +380,7 @@
 !MET_ADD_AS_ACT_EVENT       3
 !MET_ADD_AS_ACT_EVENT       4
 !MET_ADD_AS_ACT_EVENT       23
-!MET_ADD_AS_ACT_EVENT       98
+!MET_ADD_AS_ACT_EVENT       50
 !MET_ADD_AS_ACT_EVENT       99
 [ENDE]
 
