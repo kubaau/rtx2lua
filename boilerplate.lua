@@ -72,4 +72,9 @@ function onSettingsReady()
 
     rttr:GetPlayer(0):SetNation(NAT_ROMANS)
     rttr:GetPlayer(0):SetColor(0)
+
+    for i = 1, rttr:GetNumPlayers() - 1, 1
+    do
+        rttr:GetPlayer(i):Close()
+    end
 -- boilerplate end
