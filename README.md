@@ -20,7 +20,9 @@ python rtx2lua.py MISSIONS_fanpaign/MIS_0001.RTX fanpaign TXT_fanpaign > temp.lu
 
 ### All missions
 
-!COMPUTER_SET_BARRIER does not work at all.
+Saving and loading not yet supported.
+
+!COMPUTER_SET_BARRIER does not work yet.
 
 ### Roman campaign chapter `I - Off we go` (MISSIONS_roman/MIS_0000.RTX)
 
