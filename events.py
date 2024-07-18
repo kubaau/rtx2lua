@@ -150,7 +150,7 @@ def set_final_event(args):
         code += "\n        rttr:EnableCampaignChapter({}, {})".format(repr(campaign), chapter + 1)
     end[eid] += [code]
 
-def set_map_element(args):
+def set_map_element(args): # todo fix this logic - game is immediately activated in fanpaign
     global end, ongameframe
     eid = args[0]
     x = args[1]
