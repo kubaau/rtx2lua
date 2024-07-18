@@ -1,7 +1,7 @@
 from collections import defaultdict
 import constants
 
-active = []
+active = set()
 campaign = "roman"
 end = defaultdict(list)
 oncontact = defaultdict(list)
@@ -10,7 +10,7 @@ ongameframe = defaultdict(list)
 onoccupied = defaultdict(list)
 onresourcefound = defaultdict(list)
 onstart = defaultdict(list)
-requirements = {}
+times_required = {}
 
 def is_event_valid(id):
     return id != 255
@@ -34,7 +34,7 @@ def add_as_act_event(args):
     global active
     eid = args[0]
 
-    active += [eid]
+    active.add(eid)
 
 def contact_to_player(args):
     global oncontact
@@ -60,14 +60,14 @@ def direct_event(args):
         onstart[eid] += "    TriggerEndEvent({}, {})".format(end_eid, eid)
 
 def end_event(args):
-    global end, requirements
+    global end, times_required
     eid = args[0]
-    times_required = args[2]
+    times = args[2]
     events_to_activate = args[3:7]
     msgid = args[7]
 
-    if times_required > 1:
-        requirements[eid] = times_required
+    if times > 1:
+        times_required[eid] = times
 
     for e in events_to_activate:
         if is_event_valid(e):

@@ -142,11 +142,13 @@ for player in keylist:
     print("        })")
 
 print("\n        -- end events which need to be triggered multiple times")
-for eid, times_required in events.requirements.items():
+for eid, times_required in events.times_required.items():
     print("        endEvents[{:>2}] = {}".format(eid, times_required))
 
 print("\n        -- events which are active right from the start")
-for eid in events.active:
+eids = [*events.active]
+eids.sort()
+for eid in eids:
     print("        activeEvents[{:>2}] = true".format(eid))
 
 print("\n        -- onstart events")
@@ -155,30 +157,30 @@ eids.sort()
 for eid in eids:
     for handler in events.onstart[eid]:
         print("    {}".format(handler))
-print("    end\nend\n")
+print("    end")
+print("end")
 # isFirstStart end
 # onStart end
 
-# TriggerEndEvent begin
-print("-- events triggered from other events")
-print("function TriggerEndEvent(e, trigger)")
-print("    if(not activeEvents[e]) then return end")
-print("\n    if(endEvents[e]) then endEvents[e] = endEvents[e] + 1 end")
-print("\n    if(false) then -- dummy if")
+def print_TriggerEndEvent():
+    print("\nfunction TriggerEndEvent(e, trigger) -- events triggered from other events")
+    print("    if(not activeEvents[e]) then return end")
+    print("\n    if(endEvents[e]) then endEvents[e] = endEvents[e] + 1 end")
+    print("\n    if(false) then -- dummy if")
 
-keys = [*events.end]
-keys.sort()
-for eid in keys:
-    print("\n    elseif(e == {}".format(eid), end = "")
-    if events.requirements.get(eid, 1) > 1:
-         print(" and endEvents[{}] >= {}".format(eid, events.requirements[eid]), end = "")
-    print(") then")
-    for handler in events.end[eid]:
-        print("{}".format(handler))
-print("    end")
-print("\n    activeEvents[trigger] = false")
-print("end\n")
-# TriggerEndEvent end
+    eids = [*events.end]
+    eids.sort()
+    for eid in eids:
+        print("\n    elseif(e == {}".format(eid), end = "")
+        if events.times_required.get(eid, 1) > 1:
+            print(" and endEvents[{}] >= {}".format(eid, events.times_required[eid]), end = "")
+        print(") then")
+        for handler in events.end[eid]:
+            print("{}".format(handler))
+
+    print("    end")
+    print("\n    activeEvents[trigger] = false")
+    print("end")
 
 def print_handlers(edict):
     eids = [*edict]
@@ -188,7 +190,7 @@ def print_handlers(edict):
             print("    {}".format(handler))
 
 def print_onGameFrame():
-    print("function onGameFrame(gf)")
+    print("\nfunction onGameFrame(gf)")
     print_handlers(events.ongameframe)
     print("end")
 
@@ -218,9 +220,9 @@ def print_onResourceFound():
     print("    end")
     print("end")
 
+print_TriggerEndEvent()
 print_onGameFrame()
 print_onExplored()
 print_onOnccupied()
 print_onResourceFound()
-
 print("\n-- Generation end")
