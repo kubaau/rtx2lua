@@ -142,10 +142,10 @@ for player in keylist:
     print("        })")
 
 print("\n        -- end events which need to be triggered multiple times")
-for event in events.requirements:
-    print("        {}".format(event))
+for eid, times_required in events.requirements.items():
+    print("        endEvents[{:>2}] = {}".format(eid, times_required))
 
-print("\n        -- activate events")
+print("\n        -- events which are active right from the start")
 for event in events.active:
     print("        {}".format(event))
 
@@ -158,13 +158,24 @@ print("    end\nend\n")
 # onStart end
 
 # TriggerEndEvent begin
-print("function TriggerEndEvent(e)")
+print("-- events triggered from other events")
+print("function TriggerEndEvent(e, trigger)")
 print("    if(not activeEvents[e]) then return end")
-print("    if endEvents[e] ~= nil then endEvents[e] = endEvents[e] + 1 end")
-print("    if(false) then -- dummy if")
-for event in events.end:
-    print("    {}".format(event))
-print("    end\nend\n")
+print("\n    if(endEvents[e]) then endEvents[e] = endEvents[e] + 1 end")
+print("\n    if(false) then -- dummy if")
+
+keys = [*events.end]
+keys.sort()
+for eid in keys:
+    print("\n    elseif(e == {}".format(eid), end = "")
+    if events.requirements.get(eid, 1) > 1:
+         print(" and endEvents[{}] >= {}".format(eid, events.requirements[eid]), end = "")
+    print(") then")
+    for handler in events.end[eid]:
+        print("{}".format(handler))
+print("    end")
+print("\n    activeEvents[trigger] = false")
+print("end\n")
 # TriggerEndEvent end
 
 # onGameFrame begin

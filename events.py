@@ -1,15 +1,16 @@
+from collections import defaultdict
 import constants
 
 active = []
 campaign = "roman"
-end = []
+end = defaultdict(list)
 oncontact = []
 onexplored = []
 ongameframe = []
 onoccupied = []
 onresourcefound = []
 onstart = []
-requirements = []
+requirements = {}
 
 def is_event_valid(id):
     return id != 255
@@ -51,17 +52,14 @@ def end_event(args):
     events_to_activate = args[3:7]
     msgid = args[7]
 
-    code = "elseif(e == {:>2}".format(eid)
     if times_required > 1:
-        code += " and endEvents[{}] >= {}".format(eid, times_required)
-        requirements += ["endEvents[{:>2}] = 0".format(eid)]
-    code += ") then"
+        requirements[eid] = times_required
+
     for e in events_to_activate:
         if is_event_valid(e):
-            code += "\n        activeEvents[{}] = true".format(e)
+            end[eid] += ["        activeEvents[{}] = true".format(e)]
     if is_msgid_valid(msgid):
-        code += "\n        MissionText({})".format(msgid)
-    end += [code]
+        end[eid] += ["        MissionText({})".format(msgid)]
 
 def found_resource(resource, args):
     global onresourcefound
@@ -87,12 +85,11 @@ def house_amount(args):
     msgid = args[4]
 
     code = "if(activeEvents[{}] and rttr:GetPlayer(0):GetBuildingCount({}) >= {}) then".format(eid, building, amount)
-    code += "\n        TriggerEndEvent({})".format(eid)
+    code += "\n        TriggerEndEvent({0}, {0})".format(eid)
     if is_event_valid(end_eid):
-        code += "\n        TriggerEndEvent({})".format(end_eid)
+        code += "\n        TriggerEndEvent({}, {})".format(end_eid, eid)
     if is_msgid_valid(msgid):
         code += "\n        MissionText({})".format(msgid)
-    code += "\n        activeEvents[{}] = false".format(eid)
     code += "\n    end"
     ongameframe += [code]
 
@@ -103,10 +100,8 @@ def house_enabling(args):
     for i in range(1, 7):
         if is_house_valid(args[i]):
             buildings_to_enable += [args[i]]
-    code = "elseif(e == {:>2}) then".format(eid)
     for b in buildings_to_enable:
-        code += "\n        rttr:GetPlayer(0):EnableBuilding({}, true) -- TODO: wrong logic when following end event".format(constants.buildings[b])
-    end += [code]
+        end[eid] += ["        rttr:GetPlayer(0):EnableBuilding({}, true)".format(constants.buildings[b])]
 
 def land_size(args):
     global ongameframe
@@ -133,12 +128,11 @@ def position_explored_or_occupied(args, eo):
     msgid = args[4]
 
     code = "elseif(activeEvents[{}] and x == {} and y == {}) then".format(eid, x, y)
-    code += "\n        TriggerEndEvent({})".format(eid)
+    code += "\n        TriggerEndEvent({0}, {0})".format(eid)
     if is_event_valid(end_eid):
-        code += "\n        TriggerEndEvent({})".format(end_eid)
+        code += "\n        TriggerEndEvent({}, {})".format(end_eid, eid)
     if is_msgid_valid(msgid):
         code += "\n        MissionText({})".format(msgid)
-    code += "\n        activeEvents[{}] = false".format(eid)
     eo += [code]
 
 def position_explored(args):
@@ -151,22 +145,21 @@ def set_final_event(args):
     global end
     eid = args[0]
     chapter = args[1]
-    code = "elseif(e == {:>2}) then".format(eid)
-    code += "\n        rttr:SetCampaignChapterCompleted({}, {})".format(repr(campaign), chapter)
+    code = "        rttr:SetCampaignChapterCompleted({}, {})".format(repr(campaign), chapter)
     code += "\n        rttr:EnableCampaignChapter({}, {})".format(repr(campaign), chapter + 1)
-    end += [code]
+    end[eid] += [code]
 
 def set_map_element(args):
-    global ongameframe
+    global end, ongameframe
     eid = args[0]
     x = args[1]
     y = args[2]
 
     code = "if(activeEvents[{}]) then".format(eid)
-    code += "\n        rttr:GetWorld():AddStaticObject({}, {}, 561, 0xFFFF, 2)".format(x, y)
-    code += "\n        activeEvents[{}] = false".format(eid)
+    code += "\n        TriggerEndEvent({0}, {0})".format(eid)
     code += "\n    end"
     ongameframe += [code]
+    end[eid] += ["        rttr:GetWorld():AddStaticObject({}, {}, 561, 0xFFFF, 2)".format(x, y)]
 
 def ware_amount(args):
     global ongameframe
@@ -177,12 +170,11 @@ def ware_amount(args):
     msgid = args[4]
 
     code = "if(activeEvents[{}] and rttr:GetPlayer(0):GetWareCount({}) >= {}) then".format(eid, ware, amount)
-    code += "\n        TriggerEndEvent({})".format(eid)
+    code += "\n        TriggerEndEvent({0}, {0})".format(eid)
     if is_event_valid(end_eid):
-        code += "\n        TriggerEndEvent({})".format(end_eid)
+        code += "\n        TriggerEndEvent({}, {})".format(end_eid, eid)
     if is_msgid_valid(msgid):
         code += "\n        MissionText({})".format(msgid)
-    code += "\n        activeEvents[{}] = false".format(eid)
     code += "\n    end"
     ongameframe += [code]
 
