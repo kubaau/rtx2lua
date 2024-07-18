@@ -32,7 +32,16 @@ The following lines must be manually added to `onSettingsReady`:
 This is because the original map header actually has 7 players but positions 2 to 7 are not set and these slots need to be closed. 
 
 The line:  
-`elseif(activeEvents[15] and x == 34 and y == 29) then`  
+`    elseif(activeEvents[15] and x == 34 and y == 29) then`  
 should be changed to:  
-`elseif(activeEvents[15] and x == 34 and y == 28) then`  
+`    elseif(activeEvents[15] and x == 34 and y == 28) then`  
 This is because according to RTTR logic, {34, 29} is already occupied at the start.
+
+<!--
+The line:  
+`        rttr:GetPlayer(0):PlaceHQ(33, 39)`  
+should be removed or changed to:  
+`        rttr:GetPlayer(0):PlaceHQ(33, 38)`  
+This is because there already is an HQ for player 1 at {33, 38}. {33, 39} actually contains the flag for the HQ.  
+This does not apply if you are using data files from S2 v1.02. The HQ position was originally at {33, 39}. The map was changed in S2 v1.51, but they didn't update the script.
+-->
