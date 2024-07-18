@@ -108,6 +108,7 @@ def print_firststart_commands():
         print("\n        -- player {} firststart commands".format(player))
         for command in commands.player_firststart[player]:
             print("        rttr:GetPlayer({}):{}".format(player, command))
+        print("        rttr:GetPlayer({}):ClearResources()".format(player))
 
 def print_wares():
     players = [*commands.wares]
