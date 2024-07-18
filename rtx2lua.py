@@ -89,78 +89,94 @@ print("end\n")
 print("activeEvents = {}")
 print("endEvents = {}")
 
+def print_always_commands():
+    players = [*commands.player_always]
+    players.sort()
+    for player in players:
+        print("\n    -- player {} always commands".format(player))
+        if player == 0:
+            print("    rttr:GetPlayer(0):DisableAllBuildings()")
+        for command in commands.player_always[player]:
+            print("    rttr:GetPlayer({}):{}".format(player, command))
+
+def print_world_commands():
+    print("        -- world commands")
+    for command in commands.world:
+        print("        rttr:GetWorld():{}".format(command))
+
+def print_firststart_commands():
+    players = [*commands.player_firststart]
+    players.sort()
+    for player in players:
+        print("\n        -- player {} firststart commands".format(player))
+        for command in commands.player_firststart[player]:
+            print("        rttr:GetPlayer({}):{}".format(player, command))
+
+def print_wares():
+    players = [*commands.wares]
+    players.sort()
+    for player in players:
+        print("\n        -- player {} wares".format(player))
+        print("        rttr:GetPlayer({}):AddWares({{".format(player))
+        for ware in constants.wares:
+            amount = 0
+            for player_ware in commands.wares[player]:
+                if ware in player_ware.keys():
+                    amount = player_ware[ware]
+            print("            [{:13}] = {}".format(ware, amount), end = ",\n")
+        print("        })")
+
+def print_people():
+    players = [*commands.people]
+    players.sort()
+    for player in players:
+        print("\n        -- player {} people".format(player))
+        print("        rttr:GetPlayer({}):AddPeople({{".format(player))
+        for person in constants.people:
+            amount = 0
+            for player_person in commands.people[player]:
+                if person in player_person.keys():
+                    amount = player_person[person]
+            print("            [{:21}] = {}".format(person, amount), end = ",\n")
+        print("        })")
+
+def print_times_required():
+    print("\n        -- events which need to be triggered multiple times")
+    for eid, times_required in events.times_required.items():
+        print("        endEvents[{:>2}] = {}".format(eid, times_required))
+
+def print_active():
+    print("\n        -- events which are active right from the start")
+    eids = [*events.active]
+    eids.sort()
+    for eid in eids:
+        print("        activeEvents[{:>2}] = true".format(eid))
+
+def print_onstart():
+    print("\n        -- events which are triggered right from the start")
+    eids = [*events.onstart]
+    eids.sort()
+    for eid in eids:
+        for handler in events.onstart[eid]:
+            print("    {}".format(handler))
+
+def print_firststart():
+    print("\n    if isFirstStart then")
+    print_world_commands()
+    print_firststart_commands()
+    print_wares()
+    print_people()
+    print_times_required()
+    print_active()
+    print_onstart()
+    print("    end")
+
+def print_onStart():
 # onStart begin
-print("\nfunction onStart(isFirstStart)", end = "")
-
-keylist = [*commands.player_always]
-keylist.sort()
-for key in keylist:
-    print("\n    -- player {} commands always".format(key))
-    if key == 0:
-        print("    rttr:GetPlayer(0):DisableAllBuildings()")
-    for value in commands.player_always[key]:
-        print("    rttr:GetPlayer({}):{}".format(key, value))
-
-# isFirstStart begin
-print("\n    if isFirstStart then")
-
-print("        -- world commands")
-for command in commands.world:
-    print("        rttr:GetWorld():{}".format(command))
-
-keylist = [*commands.player_firststart]
-keylist.sort()
-for key in keylist:
-    print("\n        -- player {} commands firststart".format(key))
-    for value in commands.player_firststart[key]:
-        print("        rttr:GetPlayer({}):{}".format(key, value))
-
-keylist = [*commands.wares]
-keylist.sort()
-for player in keylist:
-    print("\n        -- player {} wares".format(player))
-    print("        rttr:GetPlayer({}):AddWares({{".format(player))
-    for ware in constants.wares:
-        amount = 0
-        for player_ware in commands.wares[player]:
-            if ware in player_ware.keys():
-                amount = player_ware[ware]
-        print("            [{:13}] = {}".format(ware, amount), end = ",\n")
-    print("        })")
-
-keylist = [*commands.people]
-keylist.sort()
-for player in keylist:
-    print("\n        -- player {} people".format(player))
-    print("        rttr:GetPlayer({}):AddPeople({{".format(player))
-    for person in constants.people:
-        amount = 0
-        for player_person in commands.people[player]:
-            if person in player_person.keys():
-                amount = player_person[person]
-        print("            [{:21}] = {}".format(person, amount), end = ",\n")
-    print("        })")
-
-print("\n        -- end events which need to be triggered multiple times")
-for eid, times_required in events.times_required.items():
-    print("        endEvents[{:>2}] = {}".format(eid, times_required))
-
-print("\n        -- events which are active right from the start")
-eids = [*events.active]
-eids.sort()
-for eid in eids:
-    print("        activeEvents[{:>2}] = true".format(eid))
-
-print("\n        -- onstart events")
-eids = [*events.onstart]
-eids.sort()
-for eid in eids:
-    for handler in events.onstart[eid]:
-        print("    {}".format(handler))
-print("    end")
-print("end")
-# isFirstStart end
-# onStart end
+    print("\nfunction onStart(isFirstStart)", end = "")
+    print_always_commands()
+    print_firststart()
+    print("end")
 
 def print_TriggerEndEvent():
     print("\nfunction TriggerEndEvent(e, trigger) -- events triggered from other events")
@@ -196,12 +212,9 @@ def print_onGameFrame():
 
 def print_onExplored():
     print("\nfunction onExplored(p, x, y, o)")
-
-    print("    -- onContact cases")
-    print("    if(false) then -- dummy if")
+    print("    if(false) then -- dummy if for onContact cases")
     print_handlers(events.oncontact)
     print("    end")
-
     print("\n    if(p ~= 0) then return")
     print_handlers(events.onexplored)
     print("    end")
@@ -220,6 +233,7 @@ def print_onResourceFound():
     print("    end")
     print("end")
 
+print_onStart()
 print_TriggerEndEvent()
 print_onGameFrame()
 print_onExplored()
