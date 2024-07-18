@@ -21,6 +21,9 @@ def read_next_int(data, count):
     return ret
 
 def read_until_null(data, begin):
+    if begin >= len(data): # the offsets may be wrongly configured to point beyond data
+        return []
+
     end = begin
     while data[end]:
         end = end + 1
