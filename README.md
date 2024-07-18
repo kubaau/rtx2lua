@@ -18,7 +18,7 @@ python rtx2lua.py MISSIONS_fanpaign/MIS_0001.RTX fanpaign TXT_fanpaign > temp.lu
 
 ## Known issues
 
-### Roman campaign chapter 1 (MISSIONS/MIS_0000.RTX)
+### Roman campaign chapter `I - Off we go` (MISSIONS/MIS_0000.RTX)
 
 The following lines must be manually added to `onSettingsReady`:
 ```
@@ -37,11 +37,16 @@ should be changed to:
 `    elseif(activeEvents[15] and x == 34 and y == 28) then`  
 This is because according to RTTR logic, {34, 29} is already occupied at the start.
 
-<!--
+### Roman campaign chapter `IX - The Gray Island` (MISSIONS/MIS_0008.RTX)
+
 The line:  
-`        rttr:GetPlayer(0):PlaceHQ(33, 39)`  
-should be removed or changed to:  
-`        rttr:GetPlayer(0):PlaceHQ(33, 38)`  
-This is because there already is an HQ for player 1 at {33, 38}. {33, 39} actually contains the flag for the HQ.  
-This does not apply if you are using data files from S2 v1.02. The HQ position was originally at {33, 39}. The map was changed in S2 v1.51, but they didn't update the script.
--->
+`        MissionText(6)`  
+should be changed to:  
+`        MissionText(2)`  
+This is because the original script is wrong, resulting in the `NO STRING WITH THIS ID` error in S2.
+
+The line:  
+`        rttr:GetWorld():AddStaticObject(19, 127, 561, 0xFFFF, 2)`  
+should be changed to:  
+`        rttr:GetWorld():AddStaticObject(127, 48, 561, 0xFFFF, 2)`  
+Again, this is because the original script is wrong. In S2, due to an incorrect order of arguments for !MET_SET_MAP_ELEMENT, instead of activating the gate, a rock is placed in the middle of water north of the player's starting HQ.
