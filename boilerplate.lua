@@ -41,6 +41,24 @@ function getAllowedChanges()
     }
 end
 
+-- TODO
+function onSave(saveGame)
+    -- saveGame:PushInt(eHist["n"])
+    -- for i = 1, eHist["n"] do
+    --     saveGame:PushInt(eHist[i])
+    -- end
+    -- return true
+end
+
+-- TODO
+function onLoad(saveGame)
+    -- eHist = {["n"] = saveGame:PopInt()}
+    -- for i = 1, eHist["n"] do
+    --     eHist[i] = saveGame:PopInt()
+    -- end
+    -- return true
+end
+
 function onSettingsReady()
     checkVersion()
     rttr:Log("-----------------------\n lua loaded... \n-----------------------\n")
