@@ -21,6 +21,15 @@ def is_msgid_valid(id):
 def is_house_valid(id):
     return id <= 32
 
+def get_common_code(msgid, eid, end_eid):
+    code = ""
+    if is_msgid_valid(msgid):
+        code += "\n        MissionText({})".format(msgid)
+    code += "\n        TriggerEndEvent({0}, {0})".format(eid)
+    if is_event_valid(end_eid):
+        code += "\n        TriggerEndEvent({}, {})".format(end_eid, eid)
+    return code
+
 def add_as_act_event(args):
     global active
     eid = args[0]
@@ -32,17 +41,15 @@ def contact_to_player(args):
     end_eid = args[1]
     player = args[2]
     msgid = args[3]
+
     code = "elseif(activeEvents[{0}] and (p == 0 and o == {1}) or (p == {1} and o == 0)) then".format(eid, player)
-    code += "\n        TriggerEndEvent({})".format(eid)
-    if is_event_valid(end_eid):
-        code += "\n        TriggerEndEvent({})".format(end_eid)
-    if is_msgid_valid(msgid):
-        code += "\n        MissionText({})".format(msgid)
+    code += get_common_code(msgid, eid, end_eid)
     oncontact += [code]
 
 def direct_event(args):
     global onstart
     msgid = args[2]
+
     onstart += ["MissionText({})".format(msgid)]
 
 def end_event(args):
@@ -68,12 +75,7 @@ def found_resource(resource, args):
     msgid = args[2]
 
     code = "    elseif(activeEvents[{:>2}] and r == RES_{}) then".format(eid, resource)
-    code += "\n        TriggerEndEvent({})".format(eid)
-    if is_event_valid(end_eid):
-        code += "\n        TriggerEndEvent({})".format(end_eid)
-    if is_msgid_valid(msgid):
-        code += "\n        MissionText({})".format(msgid)
-    code += "\n        activeEvents[{}] = false".format(eid)
+    code += get_common_code(msgid, eid, end_eid)
     onresourcefound += [code]
 
 def house_amount(args):
@@ -85,11 +87,7 @@ def house_amount(args):
     msgid = args[4]
 
     code = "if(activeEvents[{}] and rttr:GetPlayer(0):GetBuildingCount({}) >= {}) then".format(eid, building, amount)
-    code += "\n        TriggerEndEvent({0}, {0})".format(eid)
-    if is_event_valid(end_eid):
-        code += "\n        TriggerEndEvent({}, {})".format(end_eid, eid)
-    if is_msgid_valid(msgid):
-        code += "\n        MissionText({})".format(msgid)
+    code += get_common_code(msgid, eid, end_eid)
     code += "\n    end"
     ongameframe += [code]
 
@@ -111,12 +109,7 @@ def land_size(args):
     msgid = args[3]
 
     code = "if(activeEvents[{}] and rttr:GetPlayer(0).GetStatisticsValue ~= nil and rttr:GetPlayer(0):GetStatisticsValue(STAT_COUNTRY) >= {}) then".format(eid, size)
-    code += "\n        TriggerEndEvent({})".format(eid)
-    if is_event_valid(end_eid):
-        code += "\n        TriggerEndEvent({})".format(end_eid)
-    if is_msgid_valid(msgid):
-        code += "\n        MissionText({})".format(msgid)
-    code += "\n        activeEvents[{}] = false".format(eid)
+    code += get_common_code(msgid, eid, end_eid)
     code += "\n    end"
     ongameframe += [code]
 
@@ -128,11 +121,7 @@ def position_explored_or_occupied(args, eo):
     msgid = args[4]
 
     code = "elseif(activeEvents[{}] and x == {} and y == {}) then".format(eid, x, y)
-    code += "\n        TriggerEndEvent({0}, {0})".format(eid)
-    if is_event_valid(end_eid):
-        code += "\n        TriggerEndEvent({}, {})".format(end_eid, eid)
-    if is_msgid_valid(msgid):
-        code += "\n        MissionText({})".format(msgid)
+    code += get_common_code(msgid, eid, end_eid)
     eo += [code]
 
 def position_explored(args):
@@ -170,11 +159,7 @@ def ware_amount(args):
     msgid = args[4]
 
     code = "if(activeEvents[{}] and rttr:GetPlayer(0):GetWareCount({}) >= {}) then".format(eid, ware, amount)
-    code += "\n        TriggerEndEvent({0}, {0})".format(eid)
-    if is_event_valid(end_eid):
-        code += "\n        TriggerEndEvent({}, {})".format(end_eid, eid)
-    if is_msgid_valid(msgid):
-        code += "\n        MissionText({})".format(msgid)
+    code += get_common_code(msgid, eid, end_eid)
     code += "\n    end"
     ongameframe += [code]
 
