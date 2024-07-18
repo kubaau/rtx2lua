@@ -20,11 +20,10 @@ python rtx2lua.py MISSIONS_fanpaign/MIS_0001.RTX fanpaign TXT_fanpaign > temp.lu
 
 ### All missions
 
-Saving and loading not yet supported.
+- saving and loading not supported
+- `!COMPUTER_SET_BARRIER` not supported
 
-!COMPUTER_SET_BARRIER does not work yet.
-
-### Roman campaign chapter `I - Off we go` (MISSIONS_roman/MIS_0000.RTX)
+### Roman campaign chapter 1 (MISSIONS_roman/MIS_0000.RTX)
 
 The line:  
 `    elseif(activeEvents[15] and x == 34 and y == 29) then`  
@@ -32,7 +31,7 @@ should be changed to:
 `    elseif(activeEvents[15] and x == 34 and y == 28) then`  
 This is because according to RTTR logic, {34, 29} is already occupied at the start.
 
-### Roman campaign chapter `IX - The Gray Island` (MISSIONS_roman/MIS_0008.RTX)
+### Roman campaign chapter 9 (MISSIONS_roman/MIS_0008.RTX)
 
 The line:  
 `        MissionText(6)`  
@@ -45,7 +44,3 @@ The line:
 should be changed to:  
 `        rttr:GetWorld():AddStaticObject(127, 48, 561, 0xFFFF, 2)`  
 Again, this is because the original script is wrong. In S2, due to an incorrect order of arguments for !MET_SET_MAP_ELEMENT, instead of activating the gate, a rock is placed in the middle of water north of the player's starting HQ.
-
-### FANpaign chapters 2, 3, 7, 8, 9, 10
-
-Map headers say there is just one player while the scripts add several more.

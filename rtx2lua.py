@@ -65,6 +65,11 @@ def print_RegisterTranslations():
         print("    },")
     print("})")
 
+def print_getNumPlayers():
+    print("\nfunction getNumPlayers()")
+    print("    return {}".format(len(commands.portraits) + 1))
+    print("end")
+
 def print_boilerplate():
     with open("boilerplate.lua") as file:
         print("\n{}".format(file.read()))
@@ -235,6 +240,7 @@ def main():
     interpret_rtx()
     print_header()
     print_RegisterTranslations()
+    print_getNumPlayers()
     print_boilerplate()
     print_ai_settings()
     print_globals()
