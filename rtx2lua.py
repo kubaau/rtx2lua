@@ -152,12 +152,12 @@ def print_active():
     for eid in eids:
         print("        activeEvents[{:>2}] = true".format(eid))
 
-def print_onstart():
+def print_direct():
     print("\n        -- events which are triggered right from the start")
-    eids = [*events.onstart]
+    eids = [*events.direct]
     eids.sort()
     for eid in eids:
-        for handler in events.onstart[eid]:
+        for handler in events.direct[eid]:
             print("    {}".format(handler))
 
 def print_firststart():
@@ -168,7 +168,7 @@ def print_firststart():
     print_people()
     print_times_required()
     print_active()
-    print_onstart()
+    print_direct()
     print("    end")
 
 def print_onStart():

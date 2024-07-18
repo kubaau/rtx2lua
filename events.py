@@ -3,13 +3,13 @@ import constants
 
 active = set()
 campaign = "roman"
+direct = defaultdict(list)
 end = defaultdict(list)
 oncontact = defaultdict(list)
 onexplored = defaultdict(list)
 ongameframe = defaultdict(list)
 onoccupied = defaultdict(list)
 onresourcefound = defaultdict(list)
-onstart = defaultdict(list)
 times_required = {}
 
 def is_event_valid(id):
@@ -48,16 +48,16 @@ def contact_to_player(args):
     oncontact[eid] += [code]
 
 def direct_event(args):
-    global end, onstart
+    global direct, end
     eid = args[0]
     end_eid = args[1]
     msgid = args[2]
 
     if is_msgid_valid(msgid):
         end[eid] += ["        MissionText({})".format(msgid)]
-    onstart[eid] += ["    TriggerEndEvent({0}, {0})".format(eid)]
+    direct[eid] += ["    TriggerEndEvent({0}, {0})".format(eid)]
     if is_event_valid(end_eid):
-        onstart[eid] += "    TriggerEndEvent({}, {})".format(end_eid, eid)
+        direct[eid] += "    TriggerEndEvent({}, {})".format(end_eid, eid)
 
 def end_event(args):
     global end, times_required
