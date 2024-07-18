@@ -38,7 +38,7 @@ def print_header():
     print("\n-- Original map script: {}".format(Path(sys.argv[1]).name))
 
 def print_RegisterTranslations():
-    txt_folder = "TXT"
+    txt_folder = "TXT_roman"
     if len(sys.argv) >= 4:
         txt_folder = sys.argv[3]
 
