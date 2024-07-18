@@ -159,7 +159,7 @@ print("    end\nend\n")
 # TriggerEndEvent begin
 print("function TriggerEndEvent(e)")
 print("    if(not activeEvents[e]) then return end")
-print("    endEvents[e] = endEvents[e] + 1")
+print("    if endEvents[e] ~= nil then endEvents[e] = endEvents[e] + 1 end")
 print("    if(false) then -- dummy if")
 for event in events.end:
     print("    {}".format(event))
