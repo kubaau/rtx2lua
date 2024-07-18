@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for f in RTX/*
+for f in MISSIONS/*
 do
     python rtx2lua.py $f > /dev/null
     echo $f $?
