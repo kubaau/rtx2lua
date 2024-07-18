@@ -146,13 +146,15 @@ for eid, times_required in events.requirements.items():
     print("        endEvents[{:>2}] = {}".format(eid, times_required))
 
 print("\n        -- events which are active right from the start")
-for event in events.active:
-    print("        {}".format(event))
+for eid in events.active:
+    print("        activeEvents[{:>2}] = true".format(eid))
 
 print("\n        -- onstart events")
-for event in events.onstart:
-    print("        {}".format(event))
-
+eids = [*events.onstart]
+eids.sort()
+for eid in eids:
+    for handler in events.onstart[eid]:
+        print("    {}".format(handler))
 print("    end\nend\n")
 # isFirstStart end
 # onStart end
@@ -178,40 +180,47 @@ print("\n    activeEvents[trigger] = false")
 print("end\n")
 # TriggerEndEvent end
 
-# onGameFrame begin
-print("function onGameFrame(gf)", end = "")
-for event in events.ongameframe:
-    print("\n    {}".format(event), end = "")
-print("\nend\n")
-# onGameFrame end
+def print_handlers(edict):
+    eids = [*edict]
+    eids.sort()
+    for eid in eids:
+        for handler in edict[eid]:
+            print("    {}".format(handler))
 
-# onExplored begin
-print("function onExplored(p, x, y, o)")
-print("    -- onContact cases")
-print("    if(false) then -- dummy if")
-for event in events.oncontact:
-    print("    {}".format(event))
-print("    end\n")
-print("    if(p ~= 0) then return")
-for event in events.onexplored:
-    print("    {}".format(event))
-print("    end\nend\n")
-# onExplored end
+def print_onGameFrame():
+    print("function onGameFrame(gf)")
+    print_handlers(events.ongameframe)
+    print("end")
 
-# onOccupied begin
-print("function onOccupied(p, x, y)")
-print("    if(p ~= 0) then return")
-for event in events.onoccupied:
-    print("    {}".format(event))
-print("    end\nend\n")
-# onOccupied end
+def print_onExplored():
+    print("\nfunction onExplored(p, x, y, o)")
 
-# onResourceFound begin
-print("function onResourceFound(p, x, y, r, q)")
-print("    if(p ~= 0) then return")
-for event in events.onresourcefound:
-    print(event)
-print("    end\nend")
-# onResourceFound end
+    print("    -- onContact cases")
+    print("    if(false) then -- dummy if")
+    print_handlers(events.oncontact)
+    print("    end")
 
-print("-- Generation end")
+    print("\n    if(p ~= 0) then return")
+    print_handlers(events.onexplored)
+    print("    end")
+    print("end")
+
+def print_onOnccupied():
+    print("\nfunction onOccupied(p, x, y)")
+    print("    if(p ~= 0) then return")
+    print_handlers(events.onoccupied)
+    print("    end\nend\n")
+
+def print_onResourceFound():
+    print("function onResourceFound(p, x, y, r, q)")
+    print("    if(p ~= 0) then return")
+    print_handlers(events.onresourcefound)
+    print("    end")
+    print("end")
+
+print_onGameFrame()
+print_onExplored()
+print_onOnccupied()
+print_onResourceFound()
+
+print("\n-- Generation end")
