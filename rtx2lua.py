@@ -10,84 +10,81 @@ if len(sys.argv) < 2:
     print("Usage: python rtx2lua.py RTX_FILE [CAMPAIGN_NAME {roman}] [TXT_FOLDER {TXT}] [> OUTPUT_FILE]")
     exit(1)
 
-rtx_file = sys.argv[1]
-
 if len(sys.argv) >= 3:
     events.campaign = sys.argv[2]
 
-txt_folder = "TXT"
-if len(sys.argv) >= 4:
-    txt_folder = sys.argv[3]
+def interpret_rtx():
+    rtx_file = sys.argv[1]
+    with open(rtx_file, encoding = "cp852") as rtx:
+        for line in rtx.readlines():
+            words = line.replace(',', '').split()
+            if not words:
+                continue
 
-# RTX interpretation begin
-with open(rtx_file, encoding="cp852") as rtx:
-    for line in rtx.readlines():
-        words = line.replace(',', '').split()
-        if not words:
-            continue
+            instruction = words[0]
+            if instruction.startswith('['):
+                section = instruction.strip("[]")
+                if section == "ENDE":
+                    break
+            elif instruction.startswith('!'):
+                commands.handle(instruction.strip('!').replace("GLOBAL_", ""), [int(i) for i in words[1:]])
+            elif instruction.startswith('#'):
+                pass #print("comment {}".format(line[1:].strip()))
+            else:
+                pass #print("unknown command {}".format(words))
 
-        instruction = words[0]
-        if instruction.startswith('['):
-            section = instruction.strip("[]")
-            if section == "ENDE":
-                break
-        elif instruction.startswith('!'):
-            commands.handle(instruction.strip('!').replace("GLOBAL_", ""), [int(i) for i in words[1:]])
-        elif instruction.startswith('#'):
-            pass #print("comment {}".format(line[1:].strip()))
-        else:
-            pass #print("unknown command {}".format(words))
-# RTX interpretation end
+def print_header():
+    print("-- Generation begin (https://github.com/kubaau/rtx2lua)")
+    print("\n-- Original map script: {}".format(Path(sys.argv[1]).name))
 
-print("-- Generation begin (https://github.com/kubaau/rtx2lua)")
-print("\n-- Original map script: {}".format(Path(sys.argv[1]).name))
+def print_RegisterTranslations():
+    txt_folder = "TXT"
+    if len(sys.argv) >= 4:
+        txt_folder = sys.argv[3]
 
-# RegisterTranslations begin
-print("\nrttr:RegisterTranslations(\n{")
-sys.stdout.reconfigure(encoding="utf-8")
-for txt_subfolder in os.listdir(txt_folder):
-    diary = "Diary"
-    encoding = "cp852"
-    extension = "ENG"
-    match txt_subfolder:
-        case "de":
-            diary = "Tagebuch"
-            extension = "GER"
-        case "pl":
-            diary = "Dziennik"
-            encoding = "cp1250"
+    print("\nrttr:RegisterTranslations(\n{")
+    for txt_subfolder in os.listdir(txt_folder):
+        diary = "Diary"
+        encoding = "cp852"
+        extension = "ENG"
+        match txt_subfolder:
+            case "de":
+                diary = "Tagebuch"
+                extension = "GER"
+            case "pl":
+                diary = "Dziennik"
+                encoding = "cp1250"
 
-    txt_file = Path("{}/{}/MISS_{:03}.{}".format(txt_folder, txt_subfolder, commands.chapter, extension))
-    texts = txt2dict(txt_file, encoding)
+        txt_file = Path("{}/{}/MISS_{:03}.{}".format(txt_folder, txt_subfolder, commands.chapter, extension))
+        texts = txt2dict(txt_file, encoding)
 
-    print("    {} =\n    {{".format(txt_subfolder))
-    print("        Diary\t= '{}',".format(diary))
-    for key, value in texts.items():
-        print("        {:7} = {}".format(key, value), end = ",\n")
-    print("    },")
-print("})\n")
-# RegisterTranslations end
+        print("    {} =\n    {{".format(txt_subfolder))
+        print("        Diary   = '{}',".format(diary))
+        for key, value in texts.items():
+            print("        {:7} = {}".format(key, value), end = ",\n")
+        print("    },")
+    print("})")
 
-with open("boilerplate.lua") as file:
-    print(file.read())
+def print_boilerplate():
+    with open("boilerplate.lua") as file:
+        print("\n{}".format(file.read()))
 
-# Settings begin
-print(" -- TODO: Close() players in Mission 1")
-keylist = [*commands.portraits.keys()]
-keylist.sort()
-for player in keylist:
-    portrait = commands.portraits[player]
-    print()
-    print("    rttr:GetPlayer({}):SetAI(3)".format(player))
-    print("    rttr:GetPlayer({}):SetColor({})".format(player, player))
-    print("    rttr:GetPlayer({}):SetNation({})".format(player, constants.nations[int(portrait / 3)]))
-    print("    rttr:GetPlayer({}):SetName({})".format(player, repr(constants.portraits[portrait])))
-    print(" -- rttr:GetPlayer({}):SetPortrait({})".format(player, portrait))
-print("end\n")
-# Settings end
+def print_ai_settings():
+    ais = [*commands.portraits.keys()]
+    ais.sort()
+    for ai in ais:
+        portrait = commands.portraits[ai]
+        print("\n    rttr:GetPlayer({}):SetAI(3)".format(ai))
+        print("    rttr:GetPlayer({0}):SetColor({0})".format(ai))
+        print("    rttr:GetPlayer({}):SetNation({})".format(ai, constants.nations[int(portrait / 3)]))
+        print("    rttr:GetPlayer({}):SetName({})".format(ai, repr(constants.portraits[portrait])))
+        print(" -- rttr:GetPlayer({}):SetPortrait({})".format(ai, portrait))
+    print("\n -- TODO: Close() players in Mission 1")
+    print("end")
 
-print("activeEvents = {}")
-print("endEvents = {}")
+def print_globals():
+    print("\nactiveEvents = {}")
+    print("endEvents = {}")
 
 def print_always_commands():
     players = [*commands.player_always]
@@ -187,7 +184,7 @@ def print_TriggerEndEvent():
     eids = [*events.end]
     eids.sort()
     for eid in eids:
-        print("\n    elseif(e == {}".format(eid), end = "")
+        print("    elseif(e == {}".format(eid), end = "")
         if events.times_required.get(eid, 1) > 1:
             print(" and endEvents[{}] >= {}".format(eid, events.times_required[eid]), end = "")
         print(") then")
@@ -233,10 +230,21 @@ def print_onResourceFound():
     print("    end")
     print("end")
 
-print_onStart()
-print_TriggerEndEvent()
-print_onGameFrame()
-print_onExplored()
-print_onOnccupied()
-print_onResourceFound()
-print("\n-- Generation end")
+def main():
+    sys.stdout.reconfigure(encoding = "utf-8")
+    interpret_rtx()
+    print_header()
+    print_RegisterTranslations()
+    print_boilerplate()
+    print_ai_settings()
+    print_globals()
+    print_onStart()
+    print_TriggerEndEvent()
+    print_onGameFrame()
+    print_onExplored()
+    print_onOnccupied()
+    print_onResourceFound()
+    print("\n-- Generation end")
+
+if __name__ == '__main__':
+    main()

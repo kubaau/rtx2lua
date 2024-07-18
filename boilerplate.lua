@@ -1,4 +1,4 @@
--- Common boilerplate start
+-- boilerplate begin
 function getRequiredLuaVersion()
     return 1
 end
@@ -54,4 +54,4 @@ function onSettingsReady()
 
     rttr:GetPlayer(0):SetNation(NAT_ROMANS)
     rttr:GetPlayer(0):SetColor(0)
--- Common boilerplate end
+-- boilerplate end
