@@ -86,10 +86,6 @@ def print_ai_settings():
         print(" -- rttr:GetPlayer({}):SetPortrait({})".format(ai, portrait))
     print("end")
 
-def print_globals():
-    print("\nactiveEvents = {}")
-    print("endEvents = {}")
-
 def print_world_always_commands():
     print("\n    -- world always commands")
     for command in commands.world_always:
@@ -148,16 +144,16 @@ def print_people():
         print("        })")
 
 def print_times_required():
-    print("\n        -- events which need to be triggered multiple times")
+    print("\n    -- events which need to be triggered multiple times")
     for eid in events.times_required.keys():
-        print("        endEvents[{:>2}] = 0".format(eid))
+        print("    timesTriggered[{:>2}] = 0".format(eid))
 
 def print_active():
-    print("\n        -- events which are active right from the start")
+    print("\n    -- events which are active right from the start")
     eids = [*events.active]
     eids.sort()
     for eid in eids:
-        print("        activeEvents[{:>2}] = true".format(eid))
+        print("    activeEvents[{:>2}] = true".format(eid))
 
 def print_direct():
     print("\n        -- events which are triggered right from the start")
@@ -173,9 +169,15 @@ def print_firststart():
     print_player_firststart_commands()
     print_wares()
     print_people()
-    print_times_required()
-    print_active()
     print_direct()
+
+def print_notfirststart():
+    print("    else")
+    print("        isLoading = true")
+    print("        for i = 1, #eventHistory, 2 do")
+    print("            TriggerEndEvent(eventHistory[i], eventHistory[i + 1])")
+    print("        end")
+    print("        isLoading = false")
     print("    end")
 
 def print_onStart():
@@ -183,13 +185,16 @@ def print_onStart():
     print("\nfunction onStart(isFirstStart)", end = "")
     print_world_always_commands()
     print_player_always_commands()
+    print_times_required()
+    print_active()
     print_firststart()
+    print_notfirststart()
     print("end")
 
 def print_TriggerEndEvent():
     print("\nfunction TriggerEndEvent(e, trigger) -- events triggered from other events")
     print("    if(not activeEvents[e]) then return end")
-    print("\n    if(endEvents[e]) then endEvents[e] = endEvents[e] + 1 end")
+    print("\n    if(timesTriggered[e]) then timesTriggered[e] = timesTriggered[e] + 1 end")
     print("\n    if(false) then -- dummy if")
 
     eids = [*events.end]
@@ -197,12 +202,19 @@ def print_TriggerEndEvent():
     for eid in eids:
         print("    elseif(e == {}".format(eid), end = "")
         if events.times_required.get(eid, 1) > 1:
-            print(" and endEvents[{}] >= {}".format(eid, events.times_required[eid]), end = "")
+            print(" and timesTriggered[{}] >= {}".format(eid, events.times_required[eid]), end = "")
         print(") then")
         for handler in events.end[eid]:
             print("{}".format(handler))
 
     print("    end")
+
+    print("\n    if not isLoading then")
+    print("        local n = #eventHistory")
+    print("        eventHistory[n + 1] = e")
+    print("        eventHistory[n + 2] = trigger")
+    print("    end")
+
     print("\n    activeEvents[trigger] = false")
     print("end")
 
@@ -249,7 +261,6 @@ def main():
     print_getNumPlayers()
     print_boilerplate()
     print_ai_settings()
-    print_globals()
     print_onStart()
     print_TriggerEndEvent()
     print_onGameFrame()

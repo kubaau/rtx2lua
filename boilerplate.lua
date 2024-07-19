@@ -15,7 +15,10 @@ function checkVersion()
     end
 end
 
-function MissionText(e)
+local isLoading = false
+function showMissionText(e)
+    if isLoading then return end
+
     local msg = _('msg' .. tostring(e))
     local msgh = _('msgh'.. tostring(e))
 
@@ -27,6 +30,10 @@ function MissionText(e)
     else
         rttr:Log("Error: no Translation found: " .. _('msg' .. tostring(e)))
     end
+end
+
+function enableBuilding(b)
+    rttr:GetPlayer(0):EnableBuilding(b, not isLoading)
 end
 
 function getAllowedChanges()
@@ -41,21 +48,23 @@ function getAllowedChanges()
     }
 end
 
--- TODO
+local activeEvents = {}
+local eventHistory = {}
+local timesTriggered = {}
+
 function onSave(saveGame)
-    -- saveGame:PushInt(eHist["n"])
-    -- for i = 1, eHist["n"] do
-    --     saveGame:PushInt(eHist[i])
-    -- end
+    saveGame:PushInt(#eventHistory)
+    for i = 1, #eventHistory do
+        saveGame:PushInt(eventHistory[i])
+    end
     return true
 end
 
--- TODO
 function onLoad(saveGame)
-    -- eHist = {["n"] = saveGame:PopInt()}
-    -- for i = 1, eHist["n"] do
-    --     eHist[i] = saveGame:PopInt()
-    -- end
+    local n = saveGame:PopInt()
+    for i = 1, n do
+        eventHistory[i] = saveGame:PopInt()
+    end
     return true
 end
 

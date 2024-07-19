@@ -24,7 +24,7 @@ def is_house_valid(id):
 def get_common_code(msgid, eid, end_eid):
     code = ""
     if is_msgid_valid(msgid):
-        code += "\n        MissionText({})".format(msgid)
+        code += "\n        showMissionText({})".format(msgid)
     code += "\n        TriggerEndEvent({0}, {0})".format(eid)
     if is_event_valid(end_eid):
         code += "\n        TriggerEndEvent({}, {})".format(end_eid, eid)
@@ -54,7 +54,7 @@ def direct_event(args):
     msgid = args[2]
 
     if is_msgid_valid(msgid):
-        end[eid] += ["        MissionText({})".format(msgid)]
+        end[eid] += ["        showMissionText({})".format(msgid)]
     direct[eid] += ["    TriggerEndEvent({0}, {0})".format(eid)]
     if is_event_valid(end_eid):
         direct[eid] += "    TriggerEndEvent({}, {})".format(end_eid, eid)
@@ -73,7 +73,7 @@ def end_event(args):
         if is_event_valid(e):
             end[eid] += ["        activeEvents[{}] = true".format(e)]
     if is_msgid_valid(msgid):
-        end[eid] += ["        MissionText({})".format(msgid)]
+        end[eid] += ["        showMissionText({})".format(msgid)]
 
 def found_resource(resource, args):
     global onresourcefound
@@ -106,7 +106,7 @@ def house_enabling(args):
         if is_house_valid(args[i]):
             buildings_to_enable += [args[i]]
     for b in buildings_to_enable:
-        end[eid] += ["        rttr:GetPlayer(0):EnableBuilding({}, true)".format(constants.buildings[b])]
+        end[eid] += ["        enableBuilding({})".format(constants.buildings[b])]
 
 def land_size(args):
     global ongameframe
