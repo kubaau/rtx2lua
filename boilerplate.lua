@@ -47,7 +47,7 @@ function onSave(saveGame)
     -- for i = 1, eHist["n"] do
     --     saveGame:PushInt(eHist[i])
     -- end
-    -- return true
+    return true
 end
 
 -- TODO
@@ -56,7 +56,7 @@ function onLoad(saveGame)
     -- for i = 1, eHist["n"] do
     --     eHist[i] = saveGame:PopInt()
     -- end
-    -- return true
+    return true
 end
 
 function onSettingsReady()

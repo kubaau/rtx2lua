@@ -43,7 +43,7 @@ def contact_to_player(args):
     player = args[2]
     msgid = args[3]
 
-    code = "elseif(activeEvents[{0}] and (p == 0 and o == {1}) or (p == {1} and o == 0)) then".format(eid, player)
+    code = "elseif(activeEvents[{0}] and ((p == 0 and o == {1}) or (p == {1} and o == 0))) then".format(eid, player)
     code += get_common_code(msgid, eid, end_eid)
     oncontact[eid] += [code]
 
