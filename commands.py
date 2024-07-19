@@ -96,6 +96,15 @@ def set_hq_bobs(args):
 def set_map(args):
     pass
 
+def set_mapbobs(args):
+    pass
+
+def set_palette(args):
+    pass
+
+def set_pattern(args):
+    pass
+
 def handle(command, args):
     match command:
         case "ADD_ANIMAL":
@@ -130,5 +139,11 @@ def handle(command, args):
             set_hq_bobs(args)
         case "SET_MAP":
             set_map(args)
+        case "SET_MAPBOBS":
+            set_mapbobs(args)
+        case "SET_PALETTE":
+            set_palette(args)
+        case "SET_PATTERN":
+            set_pattern(args)
         case _:
             print("-- ! unhandled command {} args {}".format(command, args))
