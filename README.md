@@ -21,7 +21,6 @@ python rtx2lua.py MISSIONS_fanpaign/MIS_0001.RTX fanpaign TXT_fanpaign > temp.lu
 ### All missions
 
 - saving and loading not supported
-- `!COMPUTER_SET_BARRIER` not supported
 
 ### Roman campaign chapter 1 (MISSIONS_roman/MIS_0000.RTX)
 

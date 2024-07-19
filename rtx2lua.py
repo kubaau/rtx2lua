@@ -90,7 +90,12 @@ def print_globals():
     print("\nactiveEvents = {}")
     print("endEvents = {}")
 
-def print_always_commands():
+def print_world_always_commands():
+    print("\n    -- world always commands")
+    for command in commands.world_always:
+        print("    rttr:GetWorld():{}".format(command))
+
+def print_player_always_commands():
     players = [*commands.player_always]
     players.sort()
     for player in players:
@@ -100,12 +105,12 @@ def print_always_commands():
         for command in commands.player_always[player]:
             print("    rttr:GetPlayer({}):{}".format(player, command))
 
-def print_world_commands():
-    print("        -- world commands")
-    for command in commands.world:
+def print_world_firststart_commands():
+    print("        -- world firststart commands")
+    for command in commands.world_firststart:
         print("        rttr:GetWorld():{}".format(command))
 
-def print_firststart_commands():
+def print_player_firststart_commands():
     players = [*commands.player_firststart]
     players.sort()
     for player in players:
@@ -164,8 +169,8 @@ def print_direct():
 
 def print_firststart():
     print("\n    if isFirstStart then")
-    print_world_commands()
-    print_firststart_commands()
+    print_world_firststart_commands()
+    print_player_firststart_commands()
     print_wares()
     print_people()
     print_times_required()
@@ -176,7 +181,8 @@ def print_firststart():
 def print_onStart():
 # onStart begin
     print("\nfunction onStart(isFirstStart)", end = "")
-    print_always_commands()
+    print_world_always_commands()
+    print_player_always_commands()
     print_firststart()
     print("end")
 

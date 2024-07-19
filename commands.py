@@ -9,10 +9,11 @@ player_always = defaultdict(list)
 player_firststart = defaultdict(list)
 portraits = {}
 wares = defaultdict(list)
-world = []
+world_always = []
+world_firststart = []
 
 def add_animal(args):
-    global world
+    global world_firststart
 
     animal = constants.animals[args[0]]
     amount = args[1]
@@ -20,7 +21,7 @@ def add_animal(args):
     y = args[3]
 
     for _ in range(amount):
-        world += ["AddAnimal({}, {}, {})".format(x, y, animal)]
+        world_firststart += ["AddAnimal({}, {}, {})".format(x, y, animal)]
 
 def add_computer_player(args):
     player = args[0]
@@ -71,13 +72,13 @@ def set_computer_alliance(args):
     player_firststart[alliance_from] += ["MakeOneSidedAllianceTo({})".format(alliance_to)]
 
 def set_computer_barrier(args): # todo
-    global world
+    global world_always
 
     radius = args[0]
     x = args[1]
     y = args[2]
 
-    # world += ["{}(radius={}, x={}, y={})".format("SET_COMPUTER_BARRIER", radius, x, y)]
+    world_always += ["SetComputerBarrier({}, {}, {})".format(radius, x, y)]
 
 def set_house(args):
     building = constants.buildings[args[0]]
