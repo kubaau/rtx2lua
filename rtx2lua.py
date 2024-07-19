@@ -10,11 +10,12 @@ if len(sys.argv) < 2:
     print("Usage: python rtx2lua.py RTX_FILE [CAMPAIGN_NAME {roman}] [TXT_FOLDER {TXT_roman}] [> OUTPUT_FILE]")
     exit(1)
 
+rtx_file = sys.argv[1]
+
 if len(sys.argv) >= 3:
     events.campaign = sys.argv[2]
 
 def interpret_rtx():
-    rtx_file = sys.argv[1]
     with open(rtx_file, encoding = "cp852") as rtx:
         for line in rtx.readlines():
             words = line.replace(',', '').split()
@@ -35,7 +36,7 @@ def interpret_rtx():
 
 def print_header():
     print("-- Generation begin (https://github.com/kubaau/rtx2lua)")
-    print("\n-- Original map script: {}".format(Path(sys.argv[1]).name))
+    print("\n-- Original map script: {}".format(Path(rtx_file).name))
 
 def print_RegisterTranslations():
     txt_folder = "TXT_roman"
@@ -175,7 +176,7 @@ def print_notfirststart():
     print("    else")
     print("        isLoading = true")
     print("        for i = 1, #eventHistory, 2 do")
-    print("            TriggerEndEvent(eventHistory[i], eventHistory[i + 1])")
+    print("            triggerEndEvent(eventHistory[i], eventHistory[i + 1])")
     print("        end")
     print("        isLoading = false")
     print("    end")
@@ -191,19 +192,19 @@ def print_onStart():
     print_notfirststart()
     print("end")
 
-def print_TriggerEndEvent():
-    print("\nfunction TriggerEndEvent(e, trigger) -- events triggered from other events")
-    print("    if(not activeEvents[e]) then return end")
-    print("\n    if(timesTriggered[e]) then timesTriggered[e] = timesTriggered[e] + 1 end")
-    print("\n    if(false) then -- dummy if")
+def print_triggerEndEvent():
+    print("\nfunction triggerEndEvent(e, trigger) -- events triggered from other events")
+    print("    if not activeEvents[e] then return end")
+    print("\n    if timesTriggered[e] then timesTriggered[e] = timesTriggered[e] + 1 end")
+    print("\n    if false then -- dummy if")
 
     eids = [*events.end]
     eids.sort()
     for eid in eids:
-        print("    elseif(e == {}".format(eid), end = "")
+        print("    elseif e == {}".format(eid), end = "")
         if events.times_required.get(eid, 1) > 1:
             print(" and timesTriggered[{}] >= {}".format(eid, events.times_required[eid]), end = "")
-        print(") then")
+        print(" then")
         for handler in events.end[eid]:
             print("{}".format(handler))
 
@@ -232,23 +233,23 @@ def print_onGameFrame():
 
 def print_onExplored():
     print("\nfunction onExplored(p, x, y, o)")
-    print("    if(false) then -- dummy if for onContact cases")
+    print("    if false then -- dummy if for onContact cases")
     print_handlers(events.oncontact)
     print("    end")
-    print("\n    if(p ~= 0) then return")
+    print("\n    if p ~= 0 then return")
     print_handlers(events.onexplored)
     print("    end")
     print("end")
 
 def print_onOnccupied():
     print("\nfunction onOccupied(p, x, y)")
-    print("    if(p ~= 0) then return")
+    print("    if p ~= 0 then return")
     print_handlers(events.onoccupied)
     print("    end\nend\n")
 
 def print_onResourceFound():
     print("function onResourceFound(p, x, y, r, q)")
-    print("    if(p ~= 0) then return")
+    print("    if p ~= 0 then return")
     print_handlers(events.onresourcefound)
     print("    end")
     print("end")
@@ -262,7 +263,7 @@ def main():
     print_boilerplate()
     print_ai_settings()
     print_onStart()
-    print_TriggerEndEvent()
+    print_triggerEndEvent()
     print_onGameFrame()
     print_onExplored()
     print_onOnccupied()
