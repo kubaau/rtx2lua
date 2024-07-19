@@ -24,10 +24,10 @@ function showMissionText(e)
     if msg ~= ('msg' .. tostring(e)) then
         local msgh = _('msgh' .. tostring(e))
         if msgh ~= ('msgh'.. tostring(e)) then
-            rttr:MissionStatement(0, _('Diary'), msg .. '\n\n' ..msgh.. '\n\n', IM_SWORDSMAN, true)
+            rttr:MissionStatement(0, _('Diary'), msg .. '\n\n\n\n' .. msgh)
             rttr:SetMissionGoal(0, msgh)
         else
-            rttr:MissionStatement(0, _('Diary'), msg .. '\n\n', IM_SWORDSMAN, true)
+            rttr:MissionStatement(0, _('Diary'), msg)
         end
     else
         rttr:Log("Error: no Translation found: " .. msg)

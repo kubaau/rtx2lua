@@ -30,7 +30,7 @@ def read_until_null(data, begin):
     return data[begin : end]
 
 def decode(text, encoding):
-    return bytes(text).decode(encoding).replace('@', '\n')
+    return bytes(text).decode(encoding).replace('@@', '\n')
 
 def get_text_count(data):
     file_id = read_next_int(data, 2)
@@ -82,38 +82,22 @@ def txt2dict(file, encoding):
         last_read_byte = begin + len(text) + 1
         decoded_text = decode(text, encoding)
         if decoded_text:
-            decoded_text_repr = repr(decoded_text)
+            #decoded_text_repr = repr(decoded_text)
             if msg_id % 2 == 0:
                 # print("\nmsg{} = {}".format(msg_id, decoded_text_repr))
-                ret.update({"msg{}".format(msg_id): decoded_text_repr})
+                ret.update({"msg{}".format(msg_id): decoded_text})
             else:
                 # print("msgh{} = {}".format(msg_id - 1, decoded_text_repr))
-                ret.update({"msgh{}".format(msg_id - 1): decoded_text_repr})
+                ret.update({"msgh{}".format(msg_id - 1): decoded_text})
         msg_id = msg_id + 1
 
     # weird MISS_001 msg100 case - read two more texts
     if last_read_byte < len(data):
         text = read_until_null(data, last_read_byte)
         # print("\nmsg100 = {}".format(repr(decode(text, encoding))))
-        ret.update({"msg100": repr(decode(text, encoding))})
+        ret.update({"msg100": decode(text, encoding)})
         text = read_until_null(data, last_read_byte + len(text) + 1)
         # print("msgh100 = {}".format(repr(decode(text, encoding))))
-        ret.update({"msgh100": repr(decode(text, encoding))})
+        ret.update({"msgh100": decode(text, encoding)})
     
     return ret
-
-# from pathlib import Path
-# import sys
-
-# file = Path(sys.argv[1])
-
-# encoding = "cp1250"
-# if file.suffix.lower() == ".ger":
-#     encoding = "cp852"
-
-# ret = txt2dict(file, encoding)
-
-# if os.name == "nt":
-#     sys.stdout.reconfigure(encoding="utf-8")
-# for key, value in ret.items():
-#     print("{:7} = {}".format(key, value), end = ",\n")

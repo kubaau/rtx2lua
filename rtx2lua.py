@@ -62,7 +62,7 @@ def print_RegisterTranslations():
         print("    {} =\n    {{".format(txt_subfolder))
         print("        Diary   = '{}',".format(diary))
         for key, value in texts.items():
-            print("        {:7} = {}".format(key, value), end = ",\n")
+            print("        {:7} = {}".format(key, repr(value)), end = ",\n")
         print("    },")
     print("})")
 
