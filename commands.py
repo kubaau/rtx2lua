@@ -3,7 +3,6 @@ import constants
 import events
 
 act_player = 0
-chapter = 0
 people = defaultdict(list)
 player_always = defaultdict(list)
 player_firststart = defaultdict(list)
@@ -56,8 +55,7 @@ def enable_house(args):
     player_always[0] += ["EnableBuilding({}, false)".format(building)]
 
 def load_mission_texts(args):
-    global chapter
-    chapter = args[0]
+    events.chapter = args[0]
 
 def set_act_player(args):
     global act_player
@@ -71,7 +69,7 @@ def set_computer_alliance(args):
     alliance_to = args[1]
     player_firststart[alliance_from] += ["MakeOneSidedAllianceTo({})".format(alliance_to)]
 
-def set_computer_barrier(args): # todo
+def set_computer_barrier(args):
     global world_always
 
     radius = args[0]

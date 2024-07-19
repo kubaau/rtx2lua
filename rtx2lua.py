@@ -55,7 +55,7 @@ def print_RegisterTranslations():
                 diary = "Dziennik"
                 encoding = "cp1250"
 
-        txt_file = Path("{}/{}/MISS_{:03}.{}".format(txt_folder, txt_subfolder, commands.chapter, extension))
+        txt_file = Path("{}/{}/MISS_{:03}.{}".format(txt_folder, txt_subfolder, events.chapter, extension))
         texts = txt2dict(txt_file, encoding)
 
         print("    {} =\n    {{".format(txt_subfolder))

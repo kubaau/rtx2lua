@@ -3,6 +3,7 @@ import constants
 
 active = set()
 campaign = "roman"
+chapter = 0
 direct = defaultdict(list)
 end = defaultdict(list)
 oncontact = defaultdict(list)
@@ -66,6 +67,9 @@ def end_event(args):
     events_to_activate = args[3:7]
     msgid = args[7]
 
+    if campaign == "roman" and chapter == 9 and eid == 99:
+        msgid = 2 # special fix for Roman chapter 9
+
     if times > 1:
         times_required[eid] = times
 
@@ -127,6 +131,9 @@ def position_explored_or_occupied(args, eo):
     y = args[3]
     msgid = args[4]
 
+    if campaign == "roman" and chapter == 1 and eid == 15:
+        y = 28 # special fix for Roman chapter 1
+
     code = "elseif(activeEvents[{}] and x == {} and y == {}) then".format(eid, x, y)
     code += get_common_code(msgid, eid, end_eid)
     eo[eid] += [code]
@@ -156,6 +163,11 @@ def set_map_element(args):
     x = args[1]
     y = args[2]
     element_id = args[3]
+
+    if campaign == "roman" and chapter == 9 and eid == 98:
+        x = y
+        y = element_id
+        element_id = 23 # special fix for Roman chapter 9
 
     if element_id == 22: # gate
         element_id = 560
