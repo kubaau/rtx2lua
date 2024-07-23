@@ -23,4 +23,3 @@ do
     echo $f $?
     i=$((i+1))
 done
-
