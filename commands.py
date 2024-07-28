@@ -62,7 +62,7 @@ def set_act_player(args):
     act_player = args[0]
 
 def set_bobs(args):
-    pass # don't know how to handle this
+    pass # this must be handled to properly place stuff like ruins (e.g. FANpaign chapter 3)
 
 def set_computer_alliance(args):
     alliance_from = args[0]
