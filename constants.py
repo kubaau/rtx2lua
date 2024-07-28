@@ -6,7 +6,7 @@ animals = [
     "SPEC_STAG",            #4
     "SPEC_DEER",            #5
     "SPEC_DUCK",            #6
-    "JOB_PACKDONKEY",       #7 yes, in the original this id can be used to spawn donkeys, although it seems useless
+    "SPEC_POLARBEAR",       #7 in the original this id can be used to spawn donkeys, used in 2NDpaign for example
     "SPEC_SHEEP",           #8
 ]
 
