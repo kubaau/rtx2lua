@@ -1,35 +1,24 @@
 -- Generation begin (https://github.com/kubaau/rtx2lua)
 
--- Original map script: MIS_0004.RTX
+-- Original map script: MIS_0009.RTX
 
 rttr:RegisterTranslations(
 {
     de =
     {
         Diary   = 'Tagebuch',
-        msg0    = 'Ozeanien - Mission von Heiko Bieger\n\nWir können es kaum glauben: Der Zorn der Götter muß sich gelegt haben! Endlich wieder sattes Grün vor Augen, einen Wald in der Nähe mit Wild zum Jagen. In der Luft liegt der angenehme Geruch des Meeres! Im Nordosten haben Späher auch schon einen günstigen Hafenbauplatz entdeckt. Das Gebirge im Westen verspricht reichlich Erze. Und bisher habe wir noch keine Feinde entdecken können. Nutzen wir also unbedingt die Gunst der Stunde. Wer weiß, wie lange uns die Götter derart wohlgesonnen sind.                                                                                                               \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
-        msgh0   = 'Hoffe nicht auf ewige Gnade. Die Götter sind nur den fleißigen wohlgesonnen. Sieh Dich vor, und lasse Dich nicht überraschen!',
-        msg2    = 'Barbaren!\n\nWikinger von der übelsten Sorte! Es scheint so als wollten sie alles und jeden vernichten. Uns bleibt wahrscheinlich nur der Rückzug über das Meer. Wollen wir hoffen, daß wir schnell einen günstigen Hafen finden, wo es dann friedlichere Nachbarn gibt! Wir sollten so viel wie möglich von unserer Ausrüstung retten, wer weiß ob wir wieder zurückkommen können!                                                                                                        \n\n\n\n\n\n\n\n\n\n\n\n\n',
-        msgh2   = 'Nutze die Zeit sinnvoll!',
-        msg4    = 'Endlich der richtige Hafen? Wir hoffen es!\n\nArtefakte und Felszeichnungen deuten darauf hin. Die Bilder zeigen ein Gebilde, ähnlich der uns bekannten Tore. Wir konnten nur noch nicht verstehen warum sich bei den jeweiligen Zeichnungen immer wieder Boote befanden. Sollten wir etwa im Innern der Insel nochmals Schiffe bauen müssen, um weiter zu kommen?? Auch scheinen die Felszeichnungen darauf hinzuweisen, daß der Weg nur hier über das Gebirge führt.                                  \n\n\n\n\n\n\n\n\n\n\n\n\n',
-        msgh4   = 'Suche den Paß über das Gebirge, sei auf alles vorbereitet.   ',
-        msg6    = 'Wir haben das Tor erreicht und aktiviert. Der Weg ist frei.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n ',
-        msgh6   = 'Sie haben diese Mission erfüllt. Das nächste Kapitel wartet schon auf Sie...',
-        msg8    = 'Achtung    MISSION - CD    Besitzer!\n         ***********************\n       **      W A R N U N G !     **\n         ***********************\nBitte vergewissern Sie sich, daß das Update installiert ist! Ohne Update lassen sich gespeicherte Spiekstände dieser Mission nicht wieder aufrufen (wie einst bei "Im Ödland"). Speichern sie "JETZT" ab, und rufen Sie den abgespeicherten Spielstand wieder auf. Läßt sich der Spielstand wieder laden, ist alles OK. Kommt eine Fehlermeldung muß zuerst das Update installiert werden. Nach dem Update muß nochmals die FANpaign installiert werden, da wichtige Teile der Daten überschrieben wurden. Bei Gold Edition gibt es keine Probleme!',
-        msgh8   = 'Update ist zu erhalten bei:\n\nhttp://www.Siedler3.de/Siedler2\n\noder:     http://www.Bluebyte.de',
+        msg0    = 'X - Smoorland, von Heiko Bieger\n\n8. Tag im 7. Monat des 8. Jahres\n\nDas Schicksal führte uns in diese moorige Einöde. Kann man den Inschriften hier glauben, ist das Tor, das uns nach Hause bringt, nicht weit von hier. Doch die Pfade im Moor sind verschlungen. Vielleicht wäre der Wasserweg der bessere. Aber auf unseren Steinvorrat sollten wir gut achten!!!\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
+        msgh0   = 'Sammelt Eure Kräfte um durchzubrechen! Sucht nach dem letzten Tor!',
+        msg2    = 'Letzter Tag des 8. Jahres.\n\nTagebuch des Marcus:\n\nWir haben es geschafft. Morgen werden wir nach Rom zurückkehren. Wir werden den Göttern ein großes Dankesfest bieten und unsere Familien und Freunde wiedersehen.\nIch kann es kaum erwarten.\n\nAllerdings muß ich auch seiner Familie die traurige Nachricht über Octavianus\' Tod überbringen. Und auch viele andere von uns haben ihr Leben für das Vaterland, für die "patria", gelassen... \n\n\n\n\n\n\n\n\n\n',
+        msgh2   = 'Ihr habt es geschafft!',
     },
     en =
     {
         Diary   = 'Diary',
-        msg0    = "Oceania \na mission by Heiko Bieger\n\nWe just can't believe it: The wrath of the gods must have subsided. Again lavish green caresses our eyes, forests nearby are teeming with game. The air carries the pleasant smell of the sea! Scouts detected a convenient spot for a harbour in the Northeast. To the West, the mountains promise ores abundandly. And still we haven't detected enemies. Let's take advantage of the favourable condition. Who knows, how long this generous mood of the gods will last!                                                                                                               \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-        msgh0   = "Don't hope for endless mercy. The Gods only love the diligent. Take care and let yourself not be caught unawares! ",
-        msg2    = "Savages!\n\nVikings of the worst kind! Looks like they are set on demolishing each and everything. We probably are only able to retreat by sea. Let's hope, that we can find a convenient harbour very soon, where there are more friendly neigh- bours! We also should save as much of our equipment as possible, who knows, whether we will be able to return!                                                                                                      \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-        msgh2   = 'Use your time wisely!',
-        msg4    = "The right harbour at last? We hope so.\nArtefacts and drawings on the rock hint that much. The pictures show an object resembling the well known Arches. \nWe just don't understand, why there are always boats on these drawings. Should we have to build ships again in the midst of this island to go on? Also the drawings seem to convey, that only here a passage crosses the mountains.                                  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-        msgh4   = 'Search the passage across the mountains and be prepared for everything. ',
-        msg6    = 'We have reached The Arc and activated it. We are free to go.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n ',
-        msgh6   = 'You successfully fulfilled this misson. The next chapter is already waiting ...',
-        msg8    = 'Attention    MISSION - CD    owners!!\n       ***********************\n       **    W A R N I N G !    **\n       ***********************\nPleace make sure you have installed the Update! Without update saved games of this mission cannot be loaded again (as in the original mission "Wasteland"). Save the game " N O W " and try to load the saved game again. If the game loads ok, then everything is allright. If you got an error message, you must installed the update first. After the Update you will have to install this FANpaign again, since some files will have been overwritten.\nhttp://www.Bluebyte.com\nhttp://Siedler3.de/Siedler2',
+        msg0    = 'X - Smoorland, by Heiko Bieger\n\nDay 8 in the 7th month of the eighth year \n\nFate led us to this swampy desolation. If the inscriptions here is to be trusted, the Gate leading homeward is not far from here. But the paths in the moors are maeandering. Perhaps it would be better to travel by water. in any case we should have a wary eye on our stone supplies.\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
+        msgh0   = 'Gather your forces to break through.\nLook out for the last Gate.',
+        msg2    = 'Last day of the 8th year.\n\nDiary of Marcus:\n\nWe have succeeded! Tomorrow we will returne to Rome. Lets make a generous and thankful sacrifice to the Gods, for we will see again our families and friends.\nI can hardly wait for it!\n\nBut sadly I also have to report the death of Octavianus to his family. He and many others of us have given their lives for the love of their fathers counry.... \n\n\n\n\n\n\n\n\n\n',
+        msgh2   = 'You have succeeded!',
     },
 })
 
@@ -128,15 +117,15 @@ function onSettingsReady()
 
     rttr:GetPlayer(1):SetAI(3)
     rttr:GetPlayer(1):SetColor(1)
-    rttr:GetPlayer(1):SetNation(NAT_AFRICANS)
-    rttr:GetPlayer(1):SetName('Mnga Tscha')
- -- rttr:GetPlayer(1):SetPortrait(11)
+    rttr:GetPlayer(1):SetNation(NAT_VIKINGS)
+    rttr:GetPlayer(1):SetName('Olof')
+ -- rttr:GetPlayer(1):SetPortrait(5)
 
     rttr:GetPlayer(2):SetAI(3)
     rttr:GetPlayer(2):SetColor(2)
-    rttr:GetPlayer(2):SetNation(NAT_AFRICANS)
-    rttr:GetPlayer(2):SetName('Todo')
- -- rttr:GetPlayer(2):SetPortrait(10)
+    rttr:GetPlayer(2):SetNation(NAT_JAPANESE)
+    rttr:GetPlayer(2):SetName('Tsunami')
+ -- rttr:GetPlayer(2):SetPortrait(7)
 
     rttr:GetPlayer(3):SetAI(3)
     rttr:GetPlayer(3):SetColor(3)
@@ -146,29 +135,30 @@ function onSettingsReady()
 
     rttr:GetPlayer(4):SetAI(3)
     rttr:GetPlayer(4):SetColor(4)
-    rttr:GetPlayer(4):SetNation(NAT_VIKINGS)
-    rttr:GetPlayer(4):SetName('Knut')
- -- rttr:GetPlayer(4):SetPortrait(4)
+    rttr:GetPlayer(4):SetNation(NAT_JAPANESE)
+    rttr:GetPlayer(4):SetName('Hakirawashi')
+ -- rttr:GetPlayer(4):SetPortrait(8)
 
     rttr:GetPlayer(5):SetAI(3)
     rttr:GetPlayer(5):SetColor(5)
-    rttr:GetPlayer(5):SetNation(NAT_JAPANESE)
-    rttr:GetPlayer(5):SetName('Yamauchi')
- -- rttr:GetPlayer(5):SetPortrait(6)
+    rttr:GetPlayer(5):SetNation(NAT_AFRICANS)
+    rttr:GetPlayer(5):SetName('Shaka')
+ -- rttr:GetPlayer(5):SetPortrait(9)
 
     rttr:GetPlayer(6):SetAI(3)
     rttr:GetPlayer(6):SetColor(6)
-    rttr:GetPlayer(6):SetNation(NAT_JAPANESE)
-    rttr:GetPlayer(6):SetName('Hakirawashi')
- -- rttr:GetPlayer(6):SetPortrait(8)
+    rttr:GetPlayer(6):SetNation(NAT_AFRICANS)
+    rttr:GetPlayer(6):SetName('Mnga Tscha')
+ -- rttr:GetPlayer(6):SetPortrait(11)
 end
 
 function onStart(isFirstStart)
     -- world always commands
-    rttr:GetWorld():SetComputerBarrier(12, 131, 173)
-    rttr:GetWorld():SetComputerBarrier(15, 196, 127)
-    rttr:GetWorld():SetComputerBarrier(12, 54, 82)
-    rttr:GetWorld():SetComputerBarrier(12, 93, 159)
+    rttr:GetWorld():SetComputerBarrier(13, 140, 130)
+    rttr:GetWorld():SetComputerBarrier(10, 59, 73)
+    rttr:GetWorld():SetComputerBarrier(10, 134, 102)
+    rttr:GetWorld():SetComputerBarrier(10, 93, 84)
+    rttr:GetWorld():SetComputerBarrier(12, 64, 126)
 
     -- player 0 always commands
     rttr:GetPlayer(0):DisableAllBuildings()
@@ -196,104 +186,106 @@ function onStart(isFirstStart)
 
     -- events which are active right from the start
     activeEvents[ 0] = true
-    activeEvents[ 1] = true
-    activeEvents[ 2] = true
-    activeEvents[ 3] = true
-    activeEvents[ 4] = true
-    activeEvents[23] = true
-    activeEvents[50] = true
+    activeEvents[30] = true
     activeEvents[99] = true
 
     if isFirstStart then
         -- world firststart commands
 
         -- player 0 firststart commands
-        rttr:GetPlayer(0):PlaceHQ(122, 181)
+        rttr:GetPlayer(0):PlaceHQ(92, 52)
         rttr:GetPlayer(0):ClearResources()
 
         -- player 1 firststart commands
-        rttr:GetPlayer(1):MakeOneSidedAllianceTo(2)
-        rttr:GetPlayer(1):PlaceHQ(162, 127)
+        rttr:GetPlayer(1):PlaceHQ(86, 22)
+        rttr:GetPlayer(1):AIConstructionOrder(82, 19, BLD_CATAPULT)
         rttr:GetPlayer(1):ClearResources()
 
         -- player 2 firststart commands
-        rttr:GetPlayer(2):MakeOneSidedAllianceTo(1)
-        rttr:GetPlayer(2):PlaceHQ(177, 60)
+        rttr:GetPlayer(2):PlaceHQ(72, 80)
         rttr:GetPlayer(2):ClearResources()
 
         -- player 3 firststart commands
-        rttr:GetPlayer(3):MakeOneSidedAllianceTo(4)
-        rttr:GetPlayer(3):PlaceHQ(89, 199)
+        rttr:GetPlayer(3):PlaceHQ(97, 96)
+        rttr:GetPlayer(3):AIConstructionOrder(95, 94, BLD_CATAPULT)
+        rttr:GetPlayer(3):AIConstructionOrder(97, 92, BLD_CATAPULT)
         rttr:GetPlayer(3):ClearResources()
 
         -- player 4 firststart commands
-        rttr:GetPlayer(4):MakeOneSidedAllianceTo(3)
-        rttr:GetPlayer(4):PlaceHQ(77, 168)
+        rttr:GetPlayer(4):MakeOneSidedAllianceTo(6)
+        rttr:GetPlayer(4):MakeOneSidedAllianceTo(7)
+        rttr:GetPlayer(4):PlaceHQ(144, 99)
+        rttr:GetPlayer(4):AIConstructionOrder(140, 105, BLD_CATAPULT)
+        rttr:GetPlayer(4):AIConstructionOrder(141, 102, BLD_CATAPULT)
+        rttr:GetPlayer(4):AIConstructionOrder(142, 100, BLD_CATAPULT)
         rttr:GetPlayer(4):ClearResources()
 
         -- player 5 firststart commands
-        rttr:GetPlayer(5):MakeOneSidedAllianceTo(6)
-        rttr:GetPlayer(5):PlaceHQ(239, 216)
+        rttr:GetPlayer(5):PlaceHQ(17, 82)
         rttr:GetPlayer(5):ClearResources()
 
         -- player 6 firststart commands
-        rttr:GetPlayer(6):MakeOneSidedAllianceTo(5)
-        rttr:GetPlayer(6):PlaceHQ(15, 129)
+        rttr:GetPlayer(6):MakeOneSidedAllianceTo(7)
+        rttr:GetPlayer(6):PlaceHQ(37, 97)
         rttr:GetPlayer(6):ClearResources()
+
+        -- player 7 firststart commands
+        rttr:GetPlayer(7):MakeOneSidedAllianceTo(6)
+        rttr:GetPlayer(7):ClearResources()
 
         -- player 0 wares
         rttr:GetPlayer(0):AddWares({
-            [GD_WOOD      ] = 20,
+            [GD_WOOD      ] = 40,
             [GD_BOARDS    ] = 50,
             [GD_STONES    ] = 50,
-            [GD_MEAT      ] = 0,
-            [GD_GRAIN     ] = 0,
-            [GD_FLOUR     ] = 0,
-            [GD_FISH      ] = 10,
-            [GD_HAM       ] = 10,
-            [GD_BREAD     ] = 10,
-            [GD_WATER     ] = 0,
-            [GD_BEER      ] = 0,
+            [GD_MEAT      ] = 6,
+            [GD_GRAIN     ] = 10,
+            [GD_FLOUR     ] = 8,
+            [GD_FISH      ] = 4,
+            [GD_HAM       ] = 3,
+            [GD_BREAD     ] = 6,
+            [GD_WATER     ] = 20,
+            [GD_BEER      ] = 8,
             [GD_COAL      ] = 15,
-            [GD_IRONORE   ] = 15,
-            [GD_GOLD      ] = 0,
+            [GD_IRONORE   ] = 5,
+            [GD_GOLD      ] = 5,
             [GD_IRON      ] = 5,
-            [GD_COINS     ] = 0,
+            [GD_COINS     ] = 2,
             [GD_TONGS     ] = 2,
-            [GD_AXE       ] = 2,
-            [GD_SAW       ] = 2,
-            [GD_PICKAXE   ] = 5,
-            [GD_HAMMER    ] = 8,
-            [GD_SHOVEL    ] = 4,
-            [GD_CRUCIBLE  ] = 4,
-            [GD_RODANDLINE] = 8,
-            [GD_SCYTHE    ] = 4,
-            [GD_CLEAVER   ] = 3,
-            [GD_ROLLINGPIN] = 2,
-            [GD_BOW       ] = 4,
-            [GD_SWORD     ] = 9,
-            [GD_SHIELD    ] = 9,
-            [GD_BOAT      ] = 0,
+            [GD_AXE       ] = 1,
+            [GD_SAW       ] = 1,
+            [GD_PICKAXE   ] = 1,
+            [GD_HAMMER    ] = 2,
+            [GD_SHOVEL    ] = 1,
+            [GD_CRUCIBLE  ] = 1,
+            [GD_RODANDLINE] = 3,
+            [GD_SCYTHE    ] = 3,
+            [GD_CLEAVER   ] = 1,
+            [GD_ROLLINGPIN] = 1,
+            [GD_BOW       ] = 2,
+            [GD_SWORD     ] = 2,
+            [GD_SHIELD    ] = 2,
+            [GD_BOAT      ] = 4,
         })
 
         -- player 1 wares
         rttr:GetPlayer(1):AddWares({
             [GD_WOOD      ] = 0,
             [GD_BOARDS    ] = 120,
-            [GD_STONES    ] = 220,
+            [GD_STONES    ] = 120,
             [GD_MEAT      ] = 0,
             [GD_GRAIN     ] = 0,
             [GD_FLOUR     ] = 0,
-            [GD_FISH      ] = 40,
-            [GD_HAM       ] = 40,
-            [GD_BREAD     ] = 40,
+            [GD_FISH      ] = 20,
+            [GD_HAM       ] = 20,
+            [GD_BREAD     ] = 20,
             [GD_WATER     ] = 0,
-            [GD_BEER      ] = 40,
+            [GD_BEER      ] = 20,
             [GD_COAL      ] = 40,
-            [GD_IRONORE   ] = 0,
-            [GD_GOLD      ] = 25,
-            [GD_IRON      ] = 0,
-            [GD_COINS     ] = 0,
+            [GD_IRONORE   ] = 15,
+            [GD_GOLD      ] = 35,
+            [GD_IRON      ] = 10,
+            [GD_COINS     ] = 4,
             [GD_TONGS     ] = 0,
             [GD_AXE       ] = 0,
             [GD_SAW       ] = 0,
@@ -314,19 +306,19 @@ function onStart(isFirstStart)
         -- player 2 wares
         rttr:GetPlayer(2):AddWares({
             [GD_WOOD      ] = 0,
-            [GD_BOARDS    ] = 120,
-            [GD_STONES    ] = 220,
+            [GD_BOARDS    ] = 90,
+            [GD_STONES    ] = 90,
             [GD_MEAT      ] = 0,
             [GD_GRAIN     ] = 0,
             [GD_FLOUR     ] = 0,
-            [GD_FISH      ] = 40,
-            [GD_HAM       ] = 40,
-            [GD_BREAD     ] = 40,
+            [GD_FISH      ] = 20,
+            [GD_HAM       ] = 20,
+            [GD_BREAD     ] = 20,
             [GD_WATER     ] = 0,
-            [GD_BEER      ] = 40,
-            [GD_COAL      ] = 40,
+            [GD_BEER      ] = 20,
+            [GD_COAL      ] = 30,
             [GD_IRONORE   ] = 0,
-            [GD_GOLD      ] = 25,
+            [GD_GOLD      ] = 0,
             [GD_IRON      ] = 0,
             [GD_COINS     ] = 0,
             [GD_TONGS     ] = 0,
@@ -349,8 +341,8 @@ function onStart(isFirstStart)
         -- player 3 wares
         rttr:GetPlayer(3):AddWares({
             [GD_WOOD      ] = 0,
-            [GD_BOARDS    ] = 70,
-            [GD_STONES    ] = 50,
+            [GD_BOARDS    ] = 90,
+            [GD_STONES    ] = 90,
             [GD_MEAT      ] = 0,
             [GD_GRAIN     ] = 0,
             [GD_FLOUR     ] = 0,
@@ -359,7 +351,7 @@ function onStart(isFirstStart)
             [GD_BREAD     ] = 20,
             [GD_WATER     ] = 0,
             [GD_BEER      ] = 20,
-            [GD_COAL      ] = 20,
+            [GD_COAL      ] = 30,
             [GD_IRONORE   ] = 0,
             [GD_GOLD      ] = 0,
             [GD_IRON      ] = 0,
@@ -384,8 +376,8 @@ function onStart(isFirstStart)
         -- player 4 wares
         rttr:GetPlayer(4):AddWares({
             [GD_WOOD      ] = 0,
-            [GD_BOARDS    ] = 90,
-            [GD_STONES    ] = 70,
+            [GD_BOARDS    ] = 200,
+            [GD_STONES    ] = 200,
             [GD_MEAT      ] = 0,
             [GD_GRAIN     ] = 0,
             [GD_FLOUR     ] = 0,
@@ -394,9 +386,9 @@ function onStart(isFirstStart)
             [GD_BREAD     ] = 20,
             [GD_WATER     ] = 0,
             [GD_BEER      ] = 20,
-            [GD_COAL      ] = 20,
+            [GD_COAL      ] = 30,
             [GD_IRONORE   ] = 0,
-            [GD_GOLD      ] = 20,
+            [GD_GOLD      ] = 0,
             [GD_IRON      ] = 0,
             [GD_COINS     ] = 0,
             [GD_TONGS     ] = 0,
@@ -420,18 +412,18 @@ function onStart(isFirstStart)
         rttr:GetPlayer(5):AddWares({
             [GD_WOOD      ] = 0,
             [GD_BOARDS    ] = 120,
-            [GD_STONES    ] = 220,
+            [GD_STONES    ] = 120,
             [GD_MEAT      ] = 0,
             [GD_GRAIN     ] = 0,
             [GD_FLOUR     ] = 0,
-            [GD_FISH      ] = 40,
-            [GD_HAM       ] = 40,
-            [GD_BREAD     ] = 40,
+            [GD_FISH      ] = 20,
+            [GD_HAM       ] = 20,
+            [GD_BREAD     ] = 20,
             [GD_WATER     ] = 0,
-            [GD_BEER      ] = 40,
-            [GD_COAL      ] = 40,
+            [GD_BEER      ] = 20,
+            [GD_COAL      ] = 30,
             [GD_IRONORE   ] = 0,
-            [GD_GOLD      ] = 25,
+            [GD_GOLD      ] = 0,
             [GD_IRON      ] = 0,
             [GD_COINS     ] = 0,
             [GD_TONGS     ] = 0,
@@ -464,7 +456,7 @@ function onStart(isFirstStart)
             [GD_BREAD     ] = 20,
             [GD_WATER     ] = 0,
             [GD_BEER      ] = 20,
-            [GD_COAL      ] = 20,
+            [GD_COAL      ] = 30,
             [GD_IRONORE   ] = 0,
             [GD_GOLD      ] = 0,
             [GD_IRON      ] = 0,
@@ -489,35 +481,35 @@ function onStart(isFirstStart)
         -- player 0 people
         rttr:GetPlayer(0):AddPeople({
             [JOB_HELPER           ] = 100,
-            [JOB_WOODCUTTER       ] = 4,
+            [JOB_WOODCUTTER       ] = 6,
             [JOB_FISHER           ] = 4,
-            [JOB_FORESTER         ] = 3,
-            [JOB_CARPENTER        ] = 3,
+            [JOB_FORESTER         ] = 2,
+            [JOB_CARPENTER        ] = 2,
             [JOB_STONEMASON       ] = 4,
             [JOB_HUNTER           ] = 2,
-            [JOB_FARMER           ] = 2,
-            [JOB_MILLER           ] = 1,
-            [JOB_BAKER            ] = 1,
-            [JOB_BUTCHER          ] = 1,
+            [JOB_FARMER           ] = 4,
+            [JOB_MILLER           ] = 2,
+            [JOB_BAKER            ] = 2,
+            [JOB_BUTCHER          ] = 2,
             [JOB_MINER            ] = 6,
-            [JOB_BREWER           ] = 3,
-            [JOB_PIGBREEDER       ] = 1,
-            [JOB_DONKEYBREEDER    ] = 0,
-            [JOB_IRONFOUNDER      ] = 2,
+            [JOB_BREWER           ] = 2,
+            [JOB_PIGBREEDER       ] = 2,
+            [JOB_DONKEYBREEDER    ] = 1,
+            [JOB_IRONFOUNDER      ] = 1,
             [JOB_MINTER           ] = 2,
-            [JOB_METALWORKER      ] = 2,
-            [JOB_ARMORER          ] = 4,
+            [JOB_METALWORKER      ] = 1,
+            [JOB_ARMORER          ] = 1,
             [JOB_BUILDER          ] = 8,
             [JOB_PLANER           ] = 4,
             [JOB_GEOLOGIST        ] = 4,
-            [JOB_PRIVATE          ] = 45,
-            [JOB_PRIVATEFIRSTCLASS] = 0,
-            [JOB_SERGEANT         ] = 0,
-            [JOB_OFFICER          ] = 0,
-            [JOB_GENERAL          ] = 0,
+            [JOB_PRIVATE          ] = 30,
+            [JOB_PRIVATEFIRSTCLASS] = 1,
+            [JOB_SERGEANT         ] = 1,
+            [JOB_OFFICER          ] = 1,
+            [JOB_GENERAL          ] = 1,
             [JOB_SCOUT            ] = 7,
-            [JOB_SHIPWRIGHT       ] = 1,
-            [JOB_PACKDONKEY       ] = 15,
+            [JOB_SHIPWRIGHT       ] = 3,
+            [JOB_PACKDONKEY       ] = 6,
             [JOB_BOATCARRIER      ] = 0,
             [JOB_CHARBURNER       ] = 0,
         })
@@ -537,20 +529,20 @@ function onStart(isFirstStart)
             [JOB_BUTCHER          ] = 10,
             [JOB_MINER            ] = 20,
             [JOB_BREWER           ] = 10,
-            [JOB_PIGBREEDER       ] = 8,
-            [JOB_DONKEYBREEDER    ] = 2,
-            [JOB_IRONFOUNDER      ] = 10,
-            [JOB_MINTER           ] = 6,
-            [JOB_METALWORKER      ] = 5,
+            [JOB_PIGBREEDER       ] = 10,
+            [JOB_DONKEYBREEDER    ] = 10,
+            [JOB_IRONFOUNDER      ] = 8,
+            [JOB_MINTER           ] = 7,
+            [JOB_METALWORKER      ] = 10,
             [JOB_ARMORER          ] = 10,
             [JOB_BUILDER          ] = 20,
             [JOB_PLANER           ] = 20,
             [JOB_GEOLOGIST        ] = 10,
-            [JOB_PRIVATE          ] = 30,
-            [JOB_PRIVATEFIRSTCLASS] = 2,
-            [JOB_SERGEANT         ] = 5,
-            [JOB_OFFICER          ] = 10,
-            [JOB_GENERAL          ] = 40,
+            [JOB_PRIVATE          ] = 40,
+            [JOB_PRIVATEFIRSTCLASS] = 20,
+            [JOB_SERGEANT         ] = 10,
+            [JOB_OFFICER          ] = 8,
+            [JOB_GENERAL          ] = 6,
             [JOB_SCOUT            ] = 10,
             [JOB_SHIPWRIGHT       ] = 0,
             [JOB_PACKDONKEY       ] = 40,
@@ -571,22 +563,22 @@ function onStart(isFirstStart)
             [JOB_MILLER           ] = 10,
             [JOB_BAKER            ] = 10,
             [JOB_BUTCHER          ] = 10,
-            [JOB_MINER            ] = 20,
+            [JOB_MINER            ] = 10,
             [JOB_BREWER           ] = 10,
-            [JOB_PIGBREEDER       ] = 8,
-            [JOB_DONKEYBREEDER    ] = 2,
-            [JOB_IRONFOUNDER      ] = 10,
-            [JOB_MINTER           ] = 6,
-            [JOB_METALWORKER      ] = 5,
+            [JOB_PIGBREEDER       ] = 10,
+            [JOB_DONKEYBREEDER    ] = 10,
+            [JOB_IRONFOUNDER      ] = 8,
+            [JOB_MINTER           ] = 5,
+            [JOB_METALWORKER      ] = 10,
             [JOB_ARMORER          ] = 10,
             [JOB_BUILDER          ] = 20,
             [JOB_PLANER           ] = 20,
             [JOB_GEOLOGIST        ] = 10,
-            [JOB_PRIVATE          ] = 30,
-            [JOB_PRIVATEFIRSTCLASS] = 16,
-            [JOB_SERGEANT         ] = 5,
-            [JOB_OFFICER          ] = 4,
-            [JOB_GENERAL          ] = 30,
+            [JOB_PRIVATE          ] = 20,
+            [JOB_PRIVATEFIRSTCLASS] = 9,
+            [JOB_SERGEANT         ] = 3,
+            [JOB_OFFICER          ] = 2,
+            [JOB_GENERAL          ] = 1,
             [JOB_SCOUT            ] = 10,
             [JOB_SHIPWRIGHT       ] = 0,
             [JOB_PACKDONKEY       ] = 40,
@@ -603,26 +595,26 @@ function onStart(isFirstStart)
             [JOB_CARPENTER        ] = 10,
             [JOB_STONEMASON       ] = 10,
             [JOB_HUNTER           ] = 10,
-            [JOB_FARMER           ] = 10,
+            [JOB_FARMER           ] = 20,
             [JOB_MILLER           ] = 10,
             [JOB_BAKER            ] = 10,
             [JOB_BUTCHER          ] = 10,
-            [JOB_MINER            ] = 20,
+            [JOB_MINER            ] = 10,
             [JOB_BREWER           ] = 10,
-            [JOB_PIGBREEDER       ] = 5,
-            [JOB_DONKEYBREEDER    ] = 2,
+            [JOB_PIGBREEDER       ] = 10,
+            [JOB_DONKEYBREEDER    ] = 10,
             [JOB_IRONFOUNDER      ] = 8,
             [JOB_MINTER           ] = 5,
-            [JOB_METALWORKER      ] = 5,
-            [JOB_ARMORER          ] = 15,
+            [JOB_METALWORKER      ] = 10,
+            [JOB_ARMORER          ] = 10,
             [JOB_BUILDER          ] = 20,
             [JOB_PLANER           ] = 20,
             [JOB_GEOLOGIST        ] = 10,
-            [JOB_PRIVATE          ] = 20,
-            [JOB_PRIVATEFIRSTCLASS] = 15,
-            [JOB_SERGEANT         ] = 5,
-            [JOB_OFFICER          ] = 5,
-            [JOB_GENERAL          ] = 55,
+            [JOB_PRIVATE          ] = 50,
+            [JOB_PRIVATEFIRSTCLASS] = 40,
+            [JOB_SERGEANT         ] = 30,
+            [JOB_OFFICER          ] = 20,
+            [JOB_GENERAL          ] = 10,
             [JOB_SCOUT            ] = 10,
             [JOB_SHIPWRIGHT       ] = 0,
             [JOB_PACKDONKEY       ] = 40,
@@ -639,26 +631,26 @@ function onStart(isFirstStart)
             [JOB_CARPENTER        ] = 10,
             [JOB_STONEMASON       ] = 10,
             [JOB_HUNTER           ] = 10,
-            [JOB_FARMER           ] = 10,
+            [JOB_FARMER           ] = 20,
             [JOB_MILLER           ] = 10,
             [JOB_BAKER            ] = 10,
             [JOB_BUTCHER          ] = 10,
-            [JOB_MINER            ] = 20,
+            [JOB_MINER            ] = 10,
             [JOB_BREWER           ] = 10,
-            [JOB_PIGBREEDER       ] = 5,
-            [JOB_DONKEYBREEDER    ] = 2,
+            [JOB_PIGBREEDER       ] = 10,
+            [JOB_DONKEYBREEDER    ] = 10,
             [JOB_IRONFOUNDER      ] = 8,
             [JOB_MINTER           ] = 5,
-            [JOB_METALWORKER      ] = 5,
-            [JOB_ARMORER          ] = 15,
+            [JOB_METALWORKER      ] = 10,
+            [JOB_ARMORER          ] = 10,
             [JOB_BUILDER          ] = 20,
             [JOB_PLANER           ] = 20,
-            [JOB_GEOLOGIST        ] = 1,
-            [JOB_PRIVATE          ] = 32,
-            [JOB_PRIVATEFIRSTCLASS] = 16,
-            [JOB_SERGEANT         ] = 8,
-            [JOB_OFFICER          ] = 4,
-            [JOB_GENERAL          ] = 2,
+            [JOB_GEOLOGIST        ] = 10,
+            [JOB_PRIVATE          ] = 40,
+            [JOB_PRIVATEFIRSTCLASS] = 20,
+            [JOB_SERGEANT         ] = 10,
+            [JOB_OFFICER          ] = 8,
+            [JOB_GENERAL          ] = 6,
             [JOB_SCOUT            ] = 10,
             [JOB_SHIPWRIGHT       ] = 0,
             [JOB_PACKDONKEY       ] = 40,
@@ -679,21 +671,21 @@ function onStart(isFirstStart)
             [JOB_MILLER           ] = 10,
             [JOB_BAKER            ] = 10,
             [JOB_BUTCHER          ] = 10,
-            [JOB_MINER            ] = 20,
+            [JOB_MINER            ] = 10,
             [JOB_BREWER           ] = 10,
-            [JOB_PIGBREEDER       ] = 8,
-            [JOB_DONKEYBREEDER    ] = 2,
-            [JOB_IRONFOUNDER      ] = 10,
-            [JOB_MINTER           ] = 6,
-            [JOB_METALWORKER      ] = 5,
+            [JOB_PIGBREEDER       ] = 10,
+            [JOB_DONKEYBREEDER    ] = 10,
+            [JOB_IRONFOUNDER      ] = 8,
+            [JOB_MINTER           ] = 5,
+            [JOB_METALWORKER      ] = 10,
             [JOB_ARMORER          ] = 10,
             [JOB_BUILDER          ] = 20,
             [JOB_PLANER           ] = 20,
             [JOB_GEOLOGIST        ] = 10,
-            [JOB_PRIVATE          ] = 32,
-            [JOB_PRIVATEFIRSTCLASS] = 16,
+            [JOB_PRIVATE          ] = 100,
+            [JOB_PRIVATEFIRSTCLASS] = 10,
             [JOB_SERGEANT         ] = 8,
-            [JOB_OFFICER          ] = 4,
+            [JOB_OFFICER          ] = 5,
             [JOB_GENERAL          ] = 2,
             [JOB_SCOUT            ] = 10,
             [JOB_SHIPWRIGHT       ] = 0,
@@ -711,26 +703,26 @@ function onStart(isFirstStart)
             [JOB_CARPENTER        ] = 10,
             [JOB_STONEMASON       ] = 10,
             [JOB_HUNTER           ] = 10,
-            [JOB_FARMER           ] = 10,
+            [JOB_FARMER           ] = 20,
             [JOB_MILLER           ] = 10,
             [JOB_BAKER            ] = 10,
             [JOB_BUTCHER          ] = 10,
-            [JOB_MINER            ] = 20,
+            [JOB_MINER            ] = 10,
             [JOB_BREWER           ] = 10,
-            [JOB_PIGBREEDER       ] = 5,
-            [JOB_DONKEYBREEDER    ] = 2,
+            [JOB_PIGBREEDER       ] = 10,
+            [JOB_DONKEYBREEDER    ] = 10,
             [JOB_IRONFOUNDER      ] = 8,
             [JOB_MINTER           ] = 5,
-            [JOB_METALWORKER      ] = 5,
-            [JOB_ARMORER          ] = 15,
+            [JOB_METALWORKER      ] = 10,
+            [JOB_ARMORER          ] = 10,
             [JOB_BUILDER          ] = 20,
             [JOB_PLANER           ] = 20,
             [JOB_GEOLOGIST        ] = 10,
             [JOB_PRIVATE          ] = 20,
-            [JOB_PRIVATEFIRSTCLASS] = 16,
-            [JOB_SERGEANT         ] = 5,
-            [JOB_OFFICER          ] = 4,
-            [JOB_GENERAL          ] = 30,
+            [JOB_PRIVATEFIRSTCLASS] = 9,
+            [JOB_SERGEANT         ] = 3,
+            [JOB_OFFICER          ] = 2,
+            [JOB_GENERAL          ] = 1,
             [JOB_SCOUT            ] = 10,
             [JOB_SHIPWRIGHT       ] = 0,
             [JOB_PACKDONKEY       ] = 40,
@@ -740,7 +732,6 @@ function onStart(isFirstStart)
 
         -- events which are triggered right from the start
         triggerEndEvent(0, 0)
-        triggerEndEvent(4, 4)
     else
         isLoading = true
         for i = 1, #eventHistory, 2 do
@@ -758,17 +749,13 @@ function triggerEndEvent(e, trigger) -- events triggered from other events
     if false then -- dummy if
     elseif e == 0 then
         showMissionText(0)
-    elseif e == 4 then
-        showMissionText(8)
-    elseif e == 50 then
-        rttr:GetWorld():AddStaticObject(181, 61, 560, 0xFFFF, 2)
     elseif e == 98 then
-        rttr:GetWorld():AddStaticObject(181, 61, 561, 0xFFFF, 2)
+        rttr:GetWorld():AddStaticObject(91, 97, 561, 0xFFFF, 2)
     elseif e == 99 then
         activeEvents[98] = true
-        showMissionText(6)
-        rttr:SetCampaignChapterCompleted('FANpaign', 5)
-        rttr:EnableCampaignChapter('FANpaign', 6)
+        showMissionText(2)
+        rttr:SetCampaignChapterCompleted('2NDpaign', 10)
+        rttr:SetCampaignCompleted('2NDpaign')
     end
 
     if not isLoading then
@@ -781,9 +768,6 @@ function triggerEndEvent(e, trigger) -- events triggered from other events
 end
 
 function onGameFrame(gf)
-    if activeEvents[50] then
-        triggerEndEvent(50, 50)
-    end
     if activeEvents[98] then
         triggerEndEvent(98, 98)
     end
@@ -791,9 +775,6 @@ end
 
 function onExplored(p, x, y, o)
     if false then -- dummy if for onContact cases
-    elseif activeEvents[1] and ((p == 0 and o == 3) or (p == 3 and o == 0)) then
-        showMissionText(2)
-        triggerEndEvent(1, 1)
     end
 
     if p ~= 0 then return
@@ -802,13 +783,9 @@ end
 
 function onOccupied(p, x, y)
     if p ~= 0 then return
-    elseif activeEvents[2] and x == 116 and y == 43 then
-        showMissionText(4)
-        triggerEndEvent(2, 2)
-        triggerEndEvent(2, 2)
-    elseif activeEvents[3] and x == 181 and y == 61 then
-        triggerEndEvent(3, 3)
-        triggerEndEvent(99, 3)
+    elseif activeEvents[30] and x == 91 and y == 97 then
+        triggerEndEvent(30, 30)
+        triggerEndEvent(99, 30)
     end
 end
 

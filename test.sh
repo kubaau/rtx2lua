@@ -19,7 +19,18 @@ mkdir -p lua_fanpaign
 i=0
 for f in MISSIONS_fanpaign/*
 do
-    python rtx2lua.py $f fanpaign TXT_fanpaign > lua_fanpaign/MISS20$i.lua
+    python rtx2lua.py $f FANpaign TXT_fanpaign > lua_fanpaign/MISS20$i.lua
+    echo $f $?
+    i=$((i+1))
+done
+
+rm -rf lua_2ndpaign
+mkdir -p lua_2ndpaign
+
+i=0
+for f in MISSIONS_2ndpaign/*
+do
+    python rtx2lua.py $f 2NDpaign TXT_2ndpaign > lua_2ndpaign/MISS20$i.lua
     echo $f $?
     i=$((i+1))
 done

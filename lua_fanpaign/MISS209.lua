@@ -828,8 +828,8 @@ function triggerEndEvent(e, trigger) -- events triggered from other events
     elseif e == 99 then
         activeEvents[98] = true
         showMissionText(14)
-        rttr:SetCampaignChapterCompleted('fanpaign', 10)
-        rttr:SetCampaignCompleted('fanpaign')
+        rttr:SetCampaignChapterCompleted('FANpaign', 10)
+        rttr:SetCampaignCompleted('FANpaign')
     end
 
     if not isLoading then
