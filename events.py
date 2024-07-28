@@ -169,10 +169,14 @@ def set_map_element(args):
         y = element_id
         element_id = 23 # special fix for Roman chapter 9
 
+    object_size = 2
     if element_id == 22: # gate
         element_id = 560
     elif element_id == 23: # activated gate
         element_id = 561
+    elif element_id == 11: # rock
+        element_id = 511
+        object_size = 1
     else: # no idea
         return
 
@@ -180,7 +184,7 @@ def set_map_element(args):
     code += "\n        triggerEndEvent({0}, {0})".format(eid)
     code += "\n    end"
     ongameframe[eid] += [code]
-    end[eid] += ["        rttr:GetWorld():AddStaticObject({}, {}, {}, 0xFFFF, 2)".format(x, y, element_id)]
+    end[eid] += ["        rttr:GetWorld():AddStaticObject({}, {}, {}, 0xFFFF, {})".format(x, y, element_id, object_size)]
 
 def ware_amount(args):
     global ongameframe
